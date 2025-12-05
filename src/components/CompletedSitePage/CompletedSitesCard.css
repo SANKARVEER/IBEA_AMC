@@ -1,0 +1,66 @@
+.completed-sites-container {
+  padding: 20px;
+}
+
+.completed-sites-container h2 {
+  text-align: center;
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+/* Grid layout for cards */
+.completed-sites-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Individual site card */
+.completed-site-card {
+  background-color: #e6f7e6; /* light green for completed */
+  border-radius: 12px;
+  border: 1px solid #c1e1c1;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+/* Hover effect */
+.completed-site-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Card title */
+.completed-site-card h3 {
+  margin-bottom: 12px;
+  font-size: 20px;
+  color: #222;
+  border-bottom: 1px solid #c1e1c1;
+  padding-bottom: 5px;
+}
+
+/* Card content */
+.completed-site-card p {
+  margin: 5px 0;
+  font-size: 15px;
+  color: #555;
+}
+
+.completed-site-card p strong {
+  color: #333;
+}
+
+/* Optional: small labels for status */
+.completed-site-card .status {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #28a745; /* green for completed */
+}
