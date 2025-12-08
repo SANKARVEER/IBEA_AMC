@@ -15,10 +15,17 @@ import Footer from "./components/Footer/Footer";
 // AMC Pages
 import AmcSitesPage from "./components/AmcSitePages/amcsitespage";
 import AmcSiteDetails from "./components/AmcSiteDetailes/amcsitedetails";
-import CompletedSitePage from "./components/CompletedSitePage/CompletedSitePage";
+import CompletedSites from "./components/CompletedSitePage/CompletedSitePage";
 import PendingSitesPage from "./components/PendingSitesPage/PendingSitesPage";
 
+// Calendar Page
+import CalendarPage from "./components/Calendar/CalendarPage";
+
+// NEW - Service Completion Page
+import ServiceCompletionPage from "./components/ServiceCompletionPage/ServiceCompletionPage"
+
 // Context
+// import { AMCProvider } from "./components/AMCContext/AMCContext";
 import { AMCProvider } from "./components/AMCContext/AMCContext";
 
 // Router
@@ -29,6 +36,7 @@ function App() {
     <AMCProvider>
       <BrowserRouter>
         <Routes>
+
           {/* Home Page */}
           <Route
             path="/"
@@ -52,10 +60,19 @@ function App() {
           {/* AMC Site Details */}
           <Route path="/amc-sites/:id" element={<AmcSiteDetails />} />
 
-          {/* Completed Site Page */}
-          <Route path="/completed" element={<CompletedSitePage />} />
+          {/* Completed Sites Page */}
+          <Route path="/completed" element={<CompletedSites />} />
+
+          {/* Pending Sites Page */}
           <Route path="/amc-sites/pending" element={<PendingSitesPage />} />
-        </Routes>
+
+          {/* Calendar Page */}
+          <Route path="/calendar" element={<CalendarPage />} />
+
+           {/* Service Completed Page (NEW) */}
+          <Route path="/service-complete" element={<ServiceCompletionPage />} />
+
+        </Routes>-
       </BrowserRouter>
     </AMCProvider>
   );
