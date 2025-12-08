@@ -1,0 +1,38 @@
+.completed-container {
+  padding: 25px;
+  background: #f4f6f9;
+}
+
+.completed-container h2 {
+  margin-bottom: 20px;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.completed-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.completed-card {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  border-left: 6px solid gold;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.completed-card h3 {
+  margin: 0;
+  font-size: 20px;
+  color: #222;
+}
+
+.info {
+  margin-top: 12px;
+  background: #fff8d1;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+}
