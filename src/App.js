@@ -15,8 +15,19 @@ import Footer from "./components/Footer/Footer";
 // AMC Pages
 import AmcSitesPage from "./components/AmcSitePages/amcsitespage";
 import AmcSiteDetails from "./components/AmcSiteDetailes/amcsitedetails";
-import CompletedSitePage from "./components/CompletedSitePage/CompletedSitePage";
+import CompletedSites from "./components/CompletedSitePage/CompletedSitePage";
 import PendingSitesPage from "./components/PendingSitesPage/PendingSitesPage";
+
+// Calendar Page
+import CalendarPage from "./components/Calendar/CalendarPage";
+
+// Service Completion Page
+import ServiceCompletionPage from "./components/ServiceCompletionPage/ServiceCompletionPage";
+
+// ⭐ WARRANTY Pages
+import WarrantySitesPage from "./components/WarrantySitesPage/WarrantySitesPage";
+import CompletedWarrantySitesPage from "./components/WarrantySitesPage/CompletedWarrantySitesPage";
+import WarrantyDetailsPage from "./components/WarrantySitesPage/WarrantyDetailsPage";
 
 // Context
 import { AMCProvider } from "./components/AMCContext/AMCContext";
@@ -29,6 +40,7 @@ function App() {
     <AMCProvider>
       <BrowserRouter>
         <Routes>
+
           {/* Home Page */}
           <Route
             path="/"
@@ -52,9 +64,27 @@ function App() {
           {/* AMC Site Details */}
           <Route path="/amc-sites/:id" element={<AmcSiteDetails />} />
 
-          {/* Completed Site Page */}
-          <Route path="/completed" element={<CompletedSitePage />} />
+          {/* Completed AMC */}
+          <Route path="/completed" element={<CompletedSites />} />
+
+          {/* Pending AMC Sites */}
           <Route path="/amc-sites/pending" element={<PendingSitesPage />} />
+
+          {/* Calendar Page */}
+          <Route path="/calendar" element={<CalendarPage />} />
+
+          {/* AMC Service Completed Page */}
+          <Route path="/service-completed/:id" element={<ServiceCompletionPage />} />
+
+          {/* ⭐ Warranty Pages */}
+          <Route path="/warranty-sites" element={<WarrantySitesPage />} />
+
+          {/* ⭐ Completed Warranty Sites */}
+          <Route path="/completed-warranty" element={<CompletedWarrantySitesPage />} />
+
+          {/* ⭐ Warranty Details Page */}
+          <Route path="/warranty-sites/:id" element={<WarrantyDetailsPage />} />
+
         </Routes>
       </BrowserRouter>
     </AMCProvider>

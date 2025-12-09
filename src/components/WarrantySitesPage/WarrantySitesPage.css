@@ -1,0 +1,58 @@
+.amc-sites-page {
+  padding: 20px;
+}
+
+.page-headline {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  padding: 10px;
+}
+
+.amc-card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: 0.3s ease;
+}
+
+.amc-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.16);
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.view-btn {
+  margin-top: 15px;
+  background: #3867d6;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: 0.3s;
+  width: 100%;
+}
+
+.view-btn:hover {
+  background: #214fbd;
+}
+
+/* When completed */
+.star-btn {
+  background: #20bf6b !important;
+}

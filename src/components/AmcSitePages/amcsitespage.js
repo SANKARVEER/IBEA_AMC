@@ -8,27 +8,42 @@ const AmcSitesPage = () => {
   const { sites, markCompleted } = useAMC();
 
   return (
-    <div className="cards-container">
-      {sites
-        .filter((s) => !s.completed)
-        .map((card) => (
-          <div className="amc-card" key={card.id}>
-            <h3>{card.name}</h3>
-            <p><strong>Address:</strong> {card.address}</p>
-            <p><strong>Area:</strong> {card.area}</p>
-            <p><strong>Location:</strong> {card.location}</p>
+    <div className="amc-sites-page">
 
-            <button
-              className="view-btn"
-              onClick={() => {
-                markCompleted(card.id);
-                navigate("/completed");
-              }}
-            >
-              Finished →
-            </button>
-          </div>
-        ))}
+      {/* Headline */}
+      <h2 className="page-headline">Pending AMC Sites</h2>
+
+      <div className="cards-container">
+        {sites
+          .filter((s) => !s.completed)
+          .map((card) => (
+            <div className="amc-card" key={card.id}>
+              
+              <div className="card-header">
+                <h3>{card.name}</h3>
+              </div>
+
+              <p>
+                <strong>Address:</strong> {card.address}
+              </p>
+              <p>
+                <strong>Area:</strong> {card.area}
+              </p>
+              <p>
+                <strong>Location:</strong> {card.location}
+              </p>
+
+              <button
+                className={`view-btn ${card.completed ? "star-btn" : ""}`}
+                onClick={() => {
+                  markCompleted(card.id);
+                }}
+              >
+                {card.completed ? "⭐ Completed" : "Finished →"}
+              </button>
+            </div>
+          ))}
+      </div>
     </div>
   );
 };

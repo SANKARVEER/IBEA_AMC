@@ -1,66 +1,74 @@
 .completed-sites-container {
+  max-width: 1000px;
+  margin: 30px auto;
   padding: 20px;
 }
 
-.completed-sites-container h2 {
+.page-headline {
   text-align: center;
   font-size: 28px;
-  color: #333;
+  font-weight: 700;
   margin-bottom: 25px;
+  color: #333;
 }
 
-/* Grid layout for cards */
+.calendar-button-wrapper {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.calendar-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.calendar-btn:hover {
+  background-color: #0056b3;
+}
+
+.no-data {
+  text-align: center;
+  font-size: 18px;
+  color: gray;
+}
+
 .completed-sites-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
 }
 
-/* Individual site card */
 .completed-site-card {
-  background-color: #e6f7e6; /* light green for completed */
+  background: #fff;
+  padding: 18px;
   border-radius: 12px;
-  border: 1px solid #c1e1c1;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   cursor: pointer;
+  transition: transform 0.2s;
 }
 
-/* Hover effect */
 .completed-site-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
 }
 
-/* Card title */
 .completed-site-card h3 {
-  margin-bottom: 12px;
-  font-size: 20px;
-  color: #222;
-  border-bottom: 1px solid #c1e1c1;
-  padding-bottom: 5px;
+  margin-bottom: 10px;
 }
 
-/* Card content */
 .completed-site-card p {
   margin: 5px 0;
-  font-size: 15px;
-  color: #555;
 }
 
-.completed-site-card p strong {
-  color: #333;
-}
-
-/* Optional: small labels for status */
-.completed-site-card .status {
-  display: inline-block;
+.view-details {
   margin-top: 10px;
-  padding: 4px 10px;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: bold;
-  color: #fff;
-  background-color: #28a745; /* green for completed */
+  font-weight: 600;
+  color: #007bff;
 }

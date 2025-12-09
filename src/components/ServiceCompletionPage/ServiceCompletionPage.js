@@ -1,60 +1,66 @@
 import React, { useState } from "react";
-import { useAMC } from "../AMCContext/AMCContext";
 import "./ServiceCompletionPage.css";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAMC } from "../AMCContext/AMCContext";
 
-const ServiceCompletionPage = ({ site }) => {
-  const { addToCalendar } = useAMC();
+const ServiceCompletionPage = () => {
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const { sites } = useAMC();
 
-  const [selectedDate, setSelectedDate] = useState("");
-  const [selectedTime, setSelectedTime] = useState("");
-  const [techName, setTechName] = useState("");
-  const [saved, setSaved] = useState(false);
+  // Find site data
+  const site = sites.find((s) => s.id === Number(id));
+
+  const [nextVisit, setNextVisit] = useState("");
 
   const handleSave = () => {
-    addToCalendar({
-      id: site.id,
-      date: selectedDate,
-      time: selectedTime,
-      technician: techName,
-      seatType: site.amcPlan === "XL" ? "XL" : "MS"
-    });
+    if (!nextVisit) {
+      alert("Please select next visit date!");
+      return;
+    }
 
-    setSaved(true);
+    alert("Next visit date saved!");
+    navigate("/amc-sites");
   };
 
+  if (!site) {
+    return <h2 style={{ textAlign: "center" }}>Site Not Found</h2>;
+  }
+
   return (
-    <div className="service-completion-container">
-      <h2 className="service-completion-title">Complete Service - Site {site.id}</h2>
+    <div className="service-complete-container">
 
-      <div className="service-form">
-        <label>Date</label>
-        <input 
-          type="date"
-          value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
-        />
+      {/* Completed Service Card */}
+      <div className="service-card">
+        <h2 className="service-title">Service Completed</h2>
 
-        <label>Time</label>
-        <input 
-          type="time"
-          value={selectedTime}
-          onChange={(e) => setSelectedTime(e.target.value)}
-        />
+        <div className="service-info">
+          <p><strong>Building Name:</strong> {site.name}</p>
+          <p><strong>Location:</strong> {site.location}</p>
+          <p><strong>Service Completed On:</strong> 07 Dec 2025</p>
+          <p><strong>Engineer:</strong> SANKAR VEERA</p>
+        </div>
 
-        <label>Technician Name</label>
-        <input 
-          type="text"
-          value={techName}
-          placeholder="Enter technician name"
-          onChange={(e) => setTechName(e.target.value)}
-        />
-
-        <button className="save-button" onClick={handleSave}>
-          Save to Calendar
-        </button>
-
-        {saved && <p className="success-message">Saved Successfully!</p>}
+        <div className="status-badge">Completed</div>
       </div>
+
+      {/* Next Visit Planning */}
+      <div className="next-visit-card">
+        <h3>Next Visit Planning</h3>
+
+        <label className="next-label">Select Next Visit Date</label>
+        <input
+          type="date"
+          className="next-date-input"
+          value={nextVisit}
+          onChange={(e) => setNextVisit(e.target.value)}
+        />
+
+        <button className="save-btn" onClick={handleSave}>
+          Save & Continue
+        </button>
+      </div>
+
     </div>
   );
 };

@@ -21,7 +21,7 @@ const PendingSitesPage = () => {
             <div
               key={site.id}
               className="amc-site-card pending"
-              onClick={() => navigate(`/amc-sites/${site.id}`)}
+              // onClick={() => navigate(`/amc-sites/${site.id}`)}
             >
               <h3>{site.name}</h3>
               <p><strong>Area:</strong> {site.area}</p>
