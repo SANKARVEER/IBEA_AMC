@@ -1,10 +1,18 @@
+// src/components/AMCContext/AMCContext.js
 import React, { createContext, useContext, useState } from "react";
 
 const AMCContext = createContext();
 
 export const AMCProvider = ({ children }) => {
+
   // --------------------------------------------------
-  // Generate 200 Sites with AMC + Warranty Plan (MS / XL)
+  // LOGGED-IN TECHNICIAN NAME
+  // --------------------------------------------------
+  const [technicianName, setTechnicianName] = useState("Technician");
+
+
+  // --------------------------------------------------
+  // AUTO-GENERATE 200 SITES (100 WARRANTY + 100 AMC)
   // --------------------------------------------------
   const generateSites = () => {
     const areas = ["North", "South", "East", "West"];
@@ -13,24 +21,24 @@ export const AMCProvider = ({ children }) => {
       "Anna Nagar", "Porur", "Avadi", "Guindy", "Medavakkam",
     ];
 
-    const sitesList = [];
+    const list = [];
 
     for (let i = 1; i <= 200; i++) {
-      const isWarranty = i <= 100; // Only first 100 sites have warranty
+      const isWarranty = i <= 100;
 
-      sitesList.push({
+      list.push({
         id: i,
         name: `Site ${i}`,
         address: `Address ${i}, Building ${i}`,
         area: areas[i % areas.length],
         location: locations[i % locations.length],
 
-        // AMC Plan
+        // AMC
         amcPlan: i % 2 === 0 ? "MS" : "XL",
         completed: false,
         serviceInfo: null,
 
-        // WARRANTY LIMITED TO 100
+        // WARRANTY
         warranty: isWarranty,
         warrantyPlan: isWarranty ? (i % 2 === 0 ? "MS" : "XL") : null,
         warrantyCompleted: false,
@@ -38,21 +46,24 @@ export const AMCProvider = ({ children }) => {
       });
     }
 
-    return sitesList;
+    return list;
   };
+
 
   const [sites, setSites] = useState(generateSites());
   const [calendar, setCalendar] = useState([]);
 
+
   // --------------------------------------------------
-  // Add to Calendar
+  // ADD ENTRY TO CALENDAR
   // --------------------------------------------------
   const addToCalendar = (entry) => {
     setCalendar((prev) => [...prev, entry]);
   };
 
+
   // --------------------------------------------------
-  // Mark AMC Completed (Auto MS / XL)
+  // MARK AMC COMPLETED
   // --------------------------------------------------
   const markCompleted = (id) => {
     const date = new Date().toLocaleDateString();
@@ -62,19 +73,19 @@ export const AMCProvider = ({ children }) => {
     const seatType = site?.amcPlan?.toUpperCase() === "XL" ? "XL" : "MS";
 
     setSites((prev) =>
-      prev.map((site) =>
-        site.id === id
+      prev.map((s) =>
+        s.id === id
           ? {
-              ...site,
+              ...s,
               completed: true,
               serviceInfo: {
                 date,
                 time,
-                technician: "Mr. Kumar",
+                technician: technicianName,
                 seatType,
               },
             }
-          : site
+          : s
       )
     );
 
@@ -83,37 +94,36 @@ export const AMCProvider = ({ children }) => {
       type: "AMC",
       date,
       time,
-      technician: "Mr. Kumar",
+      technician: technicianName,
       seatType,
     });
   };
 
+
   // --------------------------------------------------
-  // Mark Warranty Completed (Auto MS / XL)
+  // MARK WARRANTY COMPLETED
   // --------------------------------------------------
   const markWarrantyCompleted = (id) => {
     const date = new Date().toLocaleDateString();
     const time = new Date().toLocaleTimeString();
 
     const site = sites.find((s) => s.id === id);
-    if (!site || !site.warranty) return; // Only allow warranty sites
-
     const plan = site?.warrantyPlan?.toUpperCase() === "XL" ? "XL" : "MS";
 
     setSites((prev) =>
-      prev.map((site) =>
-        site.id === id
+      prev.map((s) =>
+        s.id === id
           ? {
-              ...site,
+              ...s,
               warrantyCompleted: true,
               warrantyInfo: {
                 date,
                 time,
-                technician: "Mr. Kumar",
+                technician: technicianName,
                 plan,
               },
             }
-          : site
+          : s
       )
     );
 
@@ -122,27 +132,27 @@ export const AMCProvider = ({ children }) => {
       type: "Warranty",
       date,
       time,
-      technician: "Mr. Kumar",
+      technician: technicianName,
       plan,
     });
   };
 
-  // --------------------------------------------------
-  // Computed lists for convenience
-  // --------------------------------------------------
-  const completedAMC = sites.filter(s => s.completed);
-  const completedWarranty = sites.filter(s => s.warrantyCompleted);
 
+  // --------------------------------------------------
+  // PROVIDER EXPORT
+  // --------------------------------------------------
   return (
     <AMCContext.Provider
       value={{
         sites,
+        setSites,
         calendar,
+
         markCompleted,
         markWarrantyCompleted,
-        addToCalendar,
-        completedAMC,       // <- ready-to-use list
-        completedWarranty, // <- ready-to-use list
+
+        technicianName,
+        setTechnicianName,
       }}
     >
       {children}

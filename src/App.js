@@ -29,6 +29,9 @@ import WarrantySitesPage from "./components/WarrantySitesPage/WarrantySitesPage"
 import CompletedWarrantySitesPage from "./components/WarrantySitesPage/CompletedWarrantySitesPage";
 import WarrantyDetailsPage from "./components/WarrantySitesPage/WarrantyDetailsPage";
 
+// ⭐ Login Page
+import Login from "./components/Login/Login";
+
 // Context
 import { AMCProvider } from "./components/AMCContext/AMCContext";
 
@@ -40,6 +43,9 @@ function App() {
     <AMCProvider>
       <BrowserRouter>
         <Routes>
+
+          {/* Login Page */}
+          <Route path="/login" element={<Login />} />
 
           {/* Home Page */}
           <Route
@@ -76,13 +82,13 @@ function App() {
           {/* AMC Service Completed Page */}
           <Route path="/service-completed/:id" element={<ServiceCompletionPage />} />
 
-          {/* ⭐ Warranty Pages */}
+          {/* Warranty Pages */}
           <Route path="/warranty-sites" element={<WarrantySitesPage />} />
 
-          {/* ⭐ Completed Warranty Sites */}
+          {/* Completed Warranty Sites */}
           <Route path="/completed-warranty" element={<CompletedWarrantySitesPage />} />
 
-          {/* ⭐ Warranty Details Page */}
+          {/* Warranty Details Page */}
           <Route path="/warranty-sites/:id" element={<WarrantyDetailsPage />} />
 
         </Routes>

@@ -11,7 +11,7 @@ const WarrantySitesPage = () => {
     <div className="amc-sites-page">
 
       {/* Headline */}
-      <h2 className="page-headline">Pending Warranty Sites</h2>
+      <h2 className="page-headline"> Warranty Sites</h2>
 
       <div className="cards-container">
         {sites

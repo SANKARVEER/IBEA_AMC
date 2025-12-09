@@ -11,7 +11,7 @@ const AmcSitesPage = () => {
     <div className="amc-sites-page">
 
       {/* Headline */}
-      <h2 className="page-headline">Pending AMC Sites</h2>
+      <h2 className="page-headline"> AMC Sites</h2>
 
       <div className="cards-container">
         {sites

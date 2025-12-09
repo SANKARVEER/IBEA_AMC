@@ -1,0 +1,115 @@
+/* MAIN NAVBAR */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #111;
+  padding: 15px 25px;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.navbar-logo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* DESKTOP LINKS */
+.navbar-links {
+  display: flex;
+  gap: 20px;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 16px;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tech-name {
+  font-size: 15px;
+}
+
+.logout-btn {
+  background: red;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+/* HAMBURGER (Mobile Only) */
+.hamburger {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* MOBILE MENU (Hidden) */
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  background: #222;
+  width: 100%;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  padding: 15px 20px;
+  gap: 15px;
+  transform: translateY(-100%);
+  transition: 0.3s ease-in-out;
+}
+
+.mobile-menu.open {
+  transform: translateY(0);
+}
+
+.mobile-menu a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.mobile-tech {
+  color: #0ff;
+  font-size: 17px;
+}
+
+.mobile-logout {
+  background: red;
+  color: #fff;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 850px) {
+  .navbar-links,
+  .nav-right {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .mobile-menu {
+    display: flex;
+  }
+}
+
+.clickable {
+  cursor: pointer;
+  text-decoration: underline;
+}
