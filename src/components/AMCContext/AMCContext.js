@@ -10,7 +10,6 @@ export const AMCProvider = ({ children }) => {
   // --------------------------------------------------
   const [technicianName, setTechnicianName] = useState("Technician");
 
-
   // --------------------------------------------------
   // AUTO-GENERATE 200 SITES (100 WARRANTY + 100 AMC)
   // --------------------------------------------------
@@ -36,12 +35,14 @@ export const AMCProvider = ({ children }) => {
         // AMC
         amcPlan: i % 2 === 0 ? "MS" : "XL",
         completed: false,
+        completedDate: null,
         serviceInfo: null,
 
         // WARRANTY
         warranty: isWarranty,
         warrantyPlan: isWarranty ? (i % 2 === 0 ? "MS" : "XL") : null,
         warrantyCompleted: false,
+        warrantyCompletedDate: null,
         warrantyInfo: null,
       });
     }
@@ -49,10 +50,8 @@ export const AMCProvider = ({ children }) => {
     return list;
   };
 
-
   const [sites, setSites] = useState(generateSites());
   const [calendar, setCalendar] = useState([]);
-
 
   // --------------------------------------------------
   // ADD ENTRY TO CALENDAR
@@ -61,12 +60,11 @@ export const AMCProvider = ({ children }) => {
     setCalendar((prev) => [...prev, entry]);
   };
 
-
   // --------------------------------------------------
   // MARK AMC COMPLETED
   // --------------------------------------------------
   const markCompleted = (id) => {
-    const date = new Date().toLocaleDateString();
+    const date = new Date().toISOString().split("T")[0]; // yyyy-mm-dd
     const time = new Date().toLocaleTimeString();
 
     const site = sites.find((s) => s.id === id);
@@ -78,12 +76,8 @@ export const AMCProvider = ({ children }) => {
           ? {
               ...s,
               completed: true,
-              serviceInfo: {
-                date,
-                time,
-                technician: technicianName,
-                seatType,
-              },
+              completedDate: date,
+              serviceInfo: { date, time, technician: technicianName, seatType },
             }
           : s
       )
@@ -99,16 +93,12 @@ export const AMCProvider = ({ children }) => {
     });
   };
 
-
   // --------------------------------------------------
   // MARK WARRANTY COMPLETED
   // --------------------------------------------------
   const markWarrantyCompleted = (id) => {
-    const date = new Date().toLocaleDateString();
+    const date = new Date().toISOString().split("T")[0]; // yyyy-mm-dd
     const time = new Date().toLocaleTimeString();
-
-    const site = sites.find((s) => s.id === id);
-    const plan = site?.warrantyPlan?.toUpperCase() === "XL" ? "XL" : "MS";
 
     setSites((prev) =>
       prev.map((s) =>
@@ -116,11 +106,12 @@ export const AMCProvider = ({ children }) => {
           ? {
               ...s,
               warrantyCompleted: true,
+              warrantyCompletedDate: date,
               warrantyInfo: {
                 date,
                 time,
                 technician: technicianName,
-                plan,
+                plan: s.warrantyPlan,
               },
             }
           : s
@@ -133,10 +124,9 @@ export const AMCProvider = ({ children }) => {
       date,
       time,
       technician: technicianName,
-      plan,
+      plan: sites.find(s => s.id === id)?.warrantyPlan,
     });
   };
-
 
   // --------------------------------------------------
   // PROVIDER EXPORT
@@ -147,10 +137,8 @@ export const AMCProvider = ({ children }) => {
         sites,
         setSites,
         calendar,
-
         markCompleted,
         markWarrantyCompleted,
-
         technicianName,
         setTechnicianName,
       }}

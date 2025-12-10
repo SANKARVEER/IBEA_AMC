@@ -24,12 +24,7 @@ const CalendarPage = () => {
         >
           All
         </button>
-        <button
-          className={filter === "MS" ? "active" : ""}
-          onClick={() => setFilter("MS")}
-        >
-          MS
-        </button>
+        
         <button
           className={filter === "XL" ? "active" : ""}
           onClick={() => setFilter("XL")}
