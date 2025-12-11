@@ -1,0 +1,50 @@
+.completed-sites-container {
+  padding: 20px;
+}
+
+.page-headline {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.calendar-button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.calendar-btn {
+  padding: 10px 18px;
+  background: #007bff;
+  color: #fff;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.completed-sites-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.completed-site-card {
+  padding: 18px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.completed-site-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.17);
+}
+
+.view-details {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #007bff;
+}
