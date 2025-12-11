@@ -16,10 +16,11 @@ const CalendarPage = () => {
     "July","August","September","October","November","December"
   ];
 
-  // All completed dates
-  const completedDates = sites
-    .map(s => s.completedDate || s.warrantyCompletedDate)
-    .filter(Boolean);
+  // All completed dates (both AMC & Warranty)
+  const completedDates = Array.from(new Set([
+    ...sites.filter(s => s.completedDate).map(s => s.completedDate),
+    ...sites.filter(s => s.warrantyCompletedDate).map(s => s.warrantyCompletedDate),
+  ]));
 
   const firstDay = new Date(currentYear, currentMonth, 1).getDay();
   const totalDays = new Date(currentYear, currentMonth + 1, 0).getDate();
@@ -53,6 +54,7 @@ const CalendarPage = () => {
     setSelectedDate(formatted);
   };
 
+  // Combined results for selected date (AMC + Warranty)
   const combinedResults = [
     ...sites
       .filter((s) => s.completedDate === selectedDate)
@@ -62,7 +64,7 @@ const CalendarPage = () => {
       .map((s) => ({ ...s, type: "Warranty" })),
   ];
 
-  // Build calendar
+  // Build calendar array
   const daysArray = [];
   for (let i = 0; i < firstDay; i++) daysArray.push("");
   for (let i = 1; i <= totalDays; i++) daysArray.push(i);
@@ -72,18 +74,14 @@ const CalendarPage = () => {
       {/* Calendar Header */}
       <div className="calendar-header">
         <button onClick={prevMonth}>◀</button>
-        <h2>
-          {monthNames[currentMonth]} {currentYear}
-        </h2>
+        <h2>{monthNames[currentMonth]} {currentYear}</h2>
         <button onClick={nextMonth}>▶</button>
       </div>
 
       {/* Calendar Grid */}
       <div className="calendar-grid">
         {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d) => (
-          <div key={d} className="day-name">
-            {d}
-          </div>
+          <div key={d} className="day-name">{d}</div>
         ))}
 
         {daysArray.map((day, index) => {
@@ -100,12 +98,11 @@ const CalendarPage = () => {
             <div
               key={index}
               className={`day-box 
-                ${
-                  day === today.getDate() &&
+                ${day === today.getDate() &&
                   currentMonth === today.getMonth() &&
                   currentYear === today.getFullYear()
-                    ? "today"
-                    : ""
+                  ? "today"
+                  : ""
                 } 
                 ${isCompletedDay ? "completed-day" : ""}
               `}
@@ -131,29 +128,25 @@ const CalendarPage = () => {
                   <div className="card-header">
                     <h4>{site.name}</h4>
                     <span
-                      className={`tag ${
-                        site.type === "AMC" ? "amc" : "warranty"
-                      }`}
+                      className={`tag ${site.type === "AMC" ? "amc" : "warranty"}`}
                     >
                       {site.type}
                     </span>
                   </div>
 
-                  <p>
-                    <strong>Location:</strong> {site.location}
-                  </p>
-
-                  <p>
-                    <strong>Date:</strong>{" "}
-                    {site.completedDate || site.warrantyCompletedDate}
-                  </p>
-
+                  <p><strong>Location:</strong> {site.location}</p>
+                  <p><strong>Date:</strong> {site.completedDate || site.warrantyCompletedDate}</p>
                   <p>
                     <strong>Technician:</strong>{" "}
                     {site.type === "AMC"
                       ? site?.serviceInfo?.technician
-                      : site?.warrantyInfo?.technician}
+                      : site?.warrantyInfo?.technician
+                    }
                   </p>
+
+                  {site.type === "Warranty" && (
+                    <p><strong>Plan:</strong> {site.warrantyPlan}</p>
+                  )}
                 </div>
               ))}
             </div>

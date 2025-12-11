@@ -10,8 +10,17 @@ const AmcSitesPage = () => {
   return (
     <div className="amc-sites-page">
 
-      {/* Headline */}
-      <h2 className="page-headline"> AMC Sites</h2>
+      {/* Top Bar */}
+      <div className="top-bar">
+        <h2 className="page-headline">AMC Sites</h2>
+
+        <button
+          className="create-btn"
+          onClick={() => navigate("/create-amc-page")}
+        >
+          + Create a New Page
+        </button>
+      </div>
 
       <div className="cards-container">
         {sites
@@ -23,15 +32,9 @@ const AmcSitesPage = () => {
                 <h3>{card.name}</h3>
               </div>
 
-              <p>
-                <strong>Address:</strong> {card.address}
-              </p>
-              <p>
-                <strong>Area:</strong> {card.area}
-              </p>
-              <p>
-                <strong>Location:</strong> {card.location}
-              </p>
+              <p><strong>Address:</strong> {card.address}</p>
+              <p><strong>Area:</strong> {card.area}</p>
+              <p><strong>Location:</strong> {card.location}</p>
 
               <button
                 className={`view-btn ${card.completed ? "star-btn" : ""}`}

@@ -50,3 +50,25 @@
 .finish-btn:hover {
   background: #0056b3;
 }
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.create-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 18px;
+  font-size: 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.create-btn:hover {
+  background-color: #3d8e41;
+}
+
