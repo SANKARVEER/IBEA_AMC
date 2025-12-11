@@ -154,3 +154,20 @@
   outline: 2px solid rgba(125,211,252,0.16);
   outline-offset: 2px;
 }
+.add-group-btn,
+.mobile-add-group {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  margin-right: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.add-group-btn:hover,
+.mobile-add-group:hover {
+  background: #005ec9;
+}

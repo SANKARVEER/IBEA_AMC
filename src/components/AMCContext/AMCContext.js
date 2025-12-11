@@ -133,7 +133,7 @@ export const AMCProvider = ({ children }) => {
       seatType,
     });
 
-    sendWhatsAppMessage(site, "AMC");
+    // sendWhatsAppMessage(site, "AMC");
   };
 
   // --------------------------------------------------
@@ -166,7 +166,7 @@ export const AMCProvider = ({ children }) => {
       plan: site?.warrantyPlan,
     });
 
-    sendWhatsAppMessage(site, "Warranty");
+    // sendWhatsAppMessage(site, "Warranty");
   };
 
   // --------------------------------------------------

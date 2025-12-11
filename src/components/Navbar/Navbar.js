@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import "./Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useAMC } from "../AMCContext/AMCContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Navbar() {
-  const { technicianName, logout, calendar, setSites } = useAMC();
+  const { technicianName, logout } = useAMC();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Logout handler
   const handleLogout = () => {
     const date = new Date();
     const dateString = `${date.getFullYear()}-${String(
@@ -16,7 +17,7 @@ function Navbar() {
     ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
     const timeString = date.toLocaleTimeString();
 
-    // Optionally, record logout in calendar as "Technician Activity"
+    // Save calendar logout entry
     const logoutEntry = {
       id: Date.now(),
       type: "Logout",
@@ -24,18 +25,18 @@ function Navbar() {
       time: timeString,
       technician: technicianName,
     };
-
-    // Save logout entry in calendar
-    setSites((prev) => [...prev]); // force state update
-    logout(); // saves current sites & calendar in localStorage
-
-    // Save logoutEntry in calendar
     const savedCalendar = JSON.parse(localStorage.getItem("calendarData")) || [];
     savedCalendar.push(logoutEntry);
     localStorage.setItem("calendarData", JSON.stringify(savedCalendar));
 
-    // Redirect to login
-    navigate("/login");
+    logout();
+
+    toast.success("You have successfully logged out!", {
+      position: "top-right",
+      autoClose: 2000,
+    });
+
+    setTimeout(() => navigate("/login"), 2000);
   };
 
   return (
@@ -52,7 +53,7 @@ function Navbar() {
         <Link to="/calendar">Calendar</Link>
       </nav>
 
-      {/* Technician + Logout */}
+      {/* Technician + Add Group + Logout */}
       {technicianName && (
         <div className="nav-right">
           <span
@@ -62,13 +63,21 @@ function Navbar() {
             👨‍🔧 {technicianName}
           </span>
 
+          {/* ⭐ NEW Add Group Button */}
+          <button
+            className="add-group-btn"
+            onClick={() => navigate("/add-group")}
+          >
+            Add Group
+          </button>
+
           <button className="logout-btn" onClick={handleLogout}>
             Logout
           </button>
         </div>
       )}
 
-      {/* Hamburger Menu */}
+      {/* Hamburger */}
       <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
         ☰
       </div>
@@ -90,12 +99,22 @@ function Navbar() {
               👨‍🔧 {technicianName}
             </span>
 
+            {/* ⭐ Mobile Add Group Button */}
+            <button
+              className="mobile-add-group"
+              onClick={() => { setMenuOpen(false); navigate("/add-group"); }}
+            >
+              Add Group
+            </button>
+
             <button className="mobile-logout" onClick={handleLogout}>
               Logout
             </button>
           </>
         )}
       </div>
+
+      <ToastContainer />
     </header>
   );
 }

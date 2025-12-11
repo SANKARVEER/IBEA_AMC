@@ -36,3 +36,37 @@
   border-radius: 8px;
   font-size: 14px;
 }
+.completed-sites-page {
+  padding: 20px;
+}
+
+.completed-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 15px;
+}
+
+.completed-card {
+  background: #f5f5f5;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.completed-card h3 {
+  margin: 0 0 8px;
+}
+
+.completed-card p {
+  margin: 4px 0;
+}
+
+.completed-card .tag {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 12px;
+  margin-top: 5px;
+}
