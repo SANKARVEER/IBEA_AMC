@@ -15,6 +15,7 @@ function Navbar() {
 
   return (
     <header className="navbar">
+      {/* Logo */}
       <div className="navbar-logo">Ibea Elevators</div>
 
       {/* Desktop Menu */}
@@ -22,13 +23,14 @@ function Navbar() {
         <Link to="/">Home</Link>
         <Link to="/amc-sites">AMC</Link>
         <Link to="/warranty-sites">Warranty</Link>
+        <Link to="/completed-sites">Completed</Link> {/* ✅ ADDED */}
         <Link to="/calendar">Calendar</Link>
       </nav>
 
       {/* Technician + Logout (Desktop) */}
       {technicianName && (
         <div className="nav-right">
-          <span 
+          <span
             className="tech-name clickable"
             onClick={() => navigate("/login")}
           >
@@ -51,11 +53,12 @@ function Navbar() {
         <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
         <Link to="/amc-sites" onClick={() => setMenuOpen(false)}>AMC</Link>
         <Link to="/warranty-sites" onClick={() => setMenuOpen(false)}>Warranty</Link>
+        <Link to="/completed-sites" onClick={() => setMenuOpen(false)}>Completed</Link> {/* ✅ ADDED */}
         <Link to="/calendar" onClick={() => setMenuOpen(false)}>Calendar</Link>
 
         {technicianName && (
           <>
-            <span 
+            <span
               className="mobile-tech clickable"
               onClick={() => { setMenuOpen(false); navigate("/login"); }}
             >

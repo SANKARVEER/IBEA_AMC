@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
+// Layout Components
 import Navbar from "./components/Navbar/Navbar";
 import Header from "./components/Header/Header";
 import AMC from "./components/AMC/AMC";
@@ -11,22 +12,27 @@ import VisitPlaning from "./components/visitPlaning/visitplaning";
 import Contact from "./components/Contact/Contact";
 import Footer from "./components/Footer/Footer";
 
+// AMC Pages
 import AmcSitesPage from "./components/AmcSitePages/amcsitespage";
 import AmcSiteDetails from "./components/AmcSiteDetailes/amcsitedetails";
 import CompletedSites from "./components/CompletedSitePage/CompletedSitePage";
 import PendingSitesPage from "./components/PendingSitesPage/PendingSitesPage";
 
-// ✅ FIXED IMPORT — correct folder name
+// Calendar
 import CalendarPage from "./components/CalendarPage/CalendarPage";
 
+// Service Completion
 import ServiceCompletionPage from "./components/ServiceCompletionPage/ServiceCompletionPage";
 
+// Warranty Pages
 import WarrantySitesPage from "./components/WarrantySitesPage/WarrantySitesPage";
 import CompletedWarrantySitesPage from "./components/WarrantySitesPage/CompletedWarrantySitesPage";
 import WarrantyDetailsPage from "./components/WarrantySitesPage/WarrantyDetailsPage";
 
+// Login
 import Login from "./components/Login/Login";
 
+// Context
 import { AMCProvider } from "./components/AMCContext/AMCContext";
 
 function Layout() {
@@ -38,8 +44,10 @@ function Layout() {
       {!hideNavbar && <Navbar />}
 
       <Routes>
+        {/* Login */}
         <Route path="/login" element={<Login />} />
 
+        {/* Home Page Sections */}
         <Route
           path="/"
           element={
@@ -58,18 +66,24 @@ function Layout() {
         {/* AMC Routes */}
         <Route path="/amc-sites" element={<AmcSitesPage />} />
         <Route path="/amc-sites/:id" element={<AmcSiteDetails />} />
-        <Route path="/completed" element={<CompletedSites />} />
+        <Route path="/completed-sites" element={<CompletedSites />} />
         <Route path="/amc-sites/pending" element={<PendingSitesPage />} />
 
-        {/* Calendar Route */}
+        {/* Calendar */}
         <Route path="/calendar" element={<CalendarPage />} />
 
         {/* Service Completion */}
-        <Route path="/service-completed/:id" element={<ServiceCompletionPage />} />
+        <Route
+          path="/service-completed/:id"
+          element={<ServiceCompletionPage />}
+        />
 
         {/* Warranty Routes */}
         <Route path="/warranty-sites" element={<WarrantySitesPage />} />
-        <Route path="/completed-warranty" element={<CompletedWarrantySitesPage />} />
+        <Route
+          path="/completed-warranty"
+          element={<CompletedWarrantySitesPage />}
+        />
         <Route path="/warranty-sites/:id" element={<WarrantyDetailsPage />} />
       </Routes>
     </>

@@ -16,48 +16,53 @@ const CalendarPage = () => {
     "July","August","September","October","November","December"
   ];
 
-  // 🔥 Collect all completed dates (AMC + Warranty)
+  // All completed dates
   const completedDates = sites
     .map(s => s.completedDate || s.warrantyCompletedDate)
     .filter(Boolean);
 
-  // First day of month + total days
   const firstDay = new Date(currentYear, currentMonth, 1).getDay();
   const totalDays = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-  // Month navigation
   const prevMonth = () => {
     if (currentMonth === 0) {
       setCurrentMonth(11);
       setCurrentYear(currentYear - 1);
-    } else setCurrentMonth(currentMonth - 1);
+    } else {
+      setCurrentMonth(currentMonth - 1);
+    }
   };
 
   const nextMonth = () => {
     if (currentMonth === 11) {
       setCurrentMonth(0);
       setCurrentYear(currentYear + 1);
-    } else setCurrentMonth(currentMonth + 1);
+    } else {
+      setCurrentMonth(currentMonth + 1);
+    }
   };
 
-  // 🔥 Click a date → store yyyy-mm-dd
   const handleDayClick = (day) => {
     if (!day) return;
-    const formattedDate = `${currentYear}-${String(currentMonth + 1).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
-    setSelectedDate(formattedDate);
+
+    const formatted = `${currentYear}-${String(currentMonth + 1).padStart(
+      2,
+      "0"
+    )}-${String(day).padStart(2, "0")}`;
+
+    setSelectedDate(formatted);
   };
 
-  // 🔥 Combine AMC + Warranty completed sites for selected date
   const combinedResults = [
     ...sites
-      .filter(s => s.completedDate === selectedDate)
-      .map(s => ({ ...s, type: "AMC" })),
+      .filter((s) => s.completedDate === selectedDate)
+      .map((s) => ({ ...s, type: "AMC" })),
     ...sites
-      .filter(s => s.warrantyCompletedDate === selectedDate)
-      .map(s => ({ ...s, type: "Warranty" }))
+      .filter((s) => s.warrantyCompletedDate === selectedDate)
+      .map((s) => ({ ...s, type: "Warranty" })),
   ];
 
-  // Build calendar days
+  // Build calendar
   const daysArray = [];
   for (let i = 0; i < firstDay; i++) daysArray.push("");
   for (let i = 1; i <= totalDays; i++) daysArray.push(i);
@@ -67,24 +72,43 @@ const CalendarPage = () => {
       {/* Calendar Header */}
       <div className="calendar-header">
         <button onClick={prevMonth}>◀</button>
-        <h2>{monthNames[currentMonth]} {currentYear}</h2>
+        <h2>
+          {monthNames[currentMonth]} {currentYear}
+        </h2>
         <button onClick={nextMonth}>▶</button>
       </div>
 
       {/* Calendar Grid */}
       <div className="calendar-grid">
-        {["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map(d => (
-          <div key={d} className="day-name">{d}</div>
+        {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d) => (
+          <div key={d} className="day-name">
+            {d}
+          </div>
         ))}
-        {daysArray.map((day, idx) => {
-          const dateString = day
-            ? `${currentYear}-${String(currentMonth + 1).padStart(2,"0")}-${String(day).padStart(2,"0")}`
-            : "";
+
+        {daysArray.map((day, index) => {
+          const dateString =
+            day &&
+            `${currentYear}-${String(currentMonth + 1).padStart(
+              2,
+              "0"
+            )}-${String(day).padStart(2, "0")}`;
+
           const isCompletedDay = completedDates.includes(dateString);
+
           return (
             <div
-              key={idx}
-              className={`day-box ${day === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear() ? "today" : ""} ${isCompletedDay ? "completed-day" : ""}`}
+              key={index}
+              className={`day-box 
+                ${
+                  day === today.getDate() &&
+                  currentMonth === today.getMonth() &&
+                  currentYear === today.getFullYear()
+                    ? "today"
+                    : ""
+                } 
+                ${isCompletedDay ? "completed-day" : ""}
+              `}
               onClick={() => handleDayClick(day)}
             >
               {day}
@@ -93,26 +117,43 @@ const CalendarPage = () => {
         })}
       </div>
 
-      {/* Completed Sites Cards */}
+      {/* Results */}
       {selectedDate && (
         <div className="results-box">
           <h3>Completed Sites on {selectedDate}</h3>
+
           {combinedResults.length === 0 ? (
             <p className="no-data">No sites completed on this date.</p>
           ) : (
             <div className="results-cards">
-              {combinedResults.map(site => (
+              {combinedResults.map((site) => (
                 <div className="site-card" key={site.id}>
                   <div className="card-header">
                     <h4>{site.name}</h4>
-                    <span className={`tag ${site.type === "AMC" ? "amc" : "warranty"}`}>
+                    <span
+                      className={`tag ${
+                        site.type === "AMC" ? "amc" : "warranty"
+                      }`}
+                    >
                       {site.type}
                     </span>
                   </div>
-                  <p><strong>Location:</strong> {site.location}</p>
-                  <p><strong>Date:</strong> {site.completedDate || site.warrantyCompletedDate}</p>
-                  {site.type === "AMC" && site.serviceInfo && <p><strong>Technician:</strong> {site.serviceInfo.technician}</p>}
-                  {site.type === "Warranty" && site.warrantyInfo && <p><strong>Technician:</strong> {site.warrantyInfo.technician}</p>}
+
+                  <p>
+                    <strong>Location:</strong> {site.location}
+                  </p>
+
+                  <p>
+                    <strong>Date:</strong>{" "}
+                    {site.completedDate || site.warrantyCompletedDate}
+                  </p>
+
+                  <p>
+                    <strong>Technician:</strong>{" "}
+                    {site.type === "AMC"
+                      ? site?.serviceInfo?.technician
+                      : site?.warrantyInfo?.technician}
+                  </p>
                 </div>
               ))}
             </div>

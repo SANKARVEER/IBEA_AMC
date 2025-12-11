@@ -4,7 +4,6 @@ import React, { createContext, useContext, useState } from "react";
 const AMCContext = createContext();
 
 export const AMCProvider = ({ children }) => {
-
   // --------------------------------------------------
   // LOGGED-IN TECHNICIAN NAME
   // --------------------------------------------------
@@ -32,13 +31,13 @@ export const AMCProvider = ({ children }) => {
         area: areas[i % areas.length],
         location: locations[i % locations.length],
 
-        // AMC
+        // AMC INFO
         amcPlan: i % 2 === 0 ? "MS" : "XL",
         completed: false,
         completedDate: null,
         serviceInfo: null,
 
-        // WARRANTY
+        // WARRANTY INFO
         warranty: isWarranty,
         warrantyPlan: isWarranty ? (i % 2 === 0 ? "MS" : "XL") : null,
         warrantyCompleted: false,
@@ -46,12 +45,21 @@ export const AMCProvider = ({ children }) => {
         warrantyInfo: null,
       });
     }
-
     return list;
   };
 
   const [sites, setSites] = useState(generateSites());
   const [calendar, setCalendar] = useState([]);
+
+  // --------------------------------------------------
+  // FIXED: DATE WITHOUT TIME-ZONE SHIFT
+  // --------------------------------------------------
+  const getToday = () => {
+    const t = new Date();
+    return `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, "0")}-${String(
+      t.getDate()
+    ).padStart(2, "0")}`;
+  };
 
   // --------------------------------------------------
   // ADD ENTRY TO CALENDAR
@@ -64,7 +72,7 @@ export const AMCProvider = ({ children }) => {
   // MARK AMC COMPLETED
   // --------------------------------------------------
   const markCompleted = (id) => {
-    const date = new Date().toISOString().split("T")[0]; // yyyy-mm-dd
+    const date = getToday();
     const time = new Date().toLocaleTimeString();
 
     const site = sites.find((s) => s.id === id);
@@ -77,7 +85,12 @@ export const AMCProvider = ({ children }) => {
               ...s,
               completed: true,
               completedDate: date,
-              serviceInfo: { date, time, technician: technicianName, seatType },
+              serviceInfo: {
+                date,
+                time,
+                technician: technicianName,
+                seatType,
+              },
             }
           : s
       )
@@ -97,8 +110,9 @@ export const AMCProvider = ({ children }) => {
   // MARK WARRANTY COMPLETED
   // --------------------------------------------------
   const markWarrantyCompleted = (id) => {
-    const date = new Date().toISOString().split("T")[0]; // yyyy-mm-dd
+    const date = getToday();
     const time = new Date().toLocaleTimeString();
+    const site = sites.find((s) => s.id === id);
 
     setSites((prev) =>
       prev.map((s) =>
@@ -111,7 +125,7 @@ export const AMCProvider = ({ children }) => {
                 date,
                 time,
                 technician: technicianName,
-                plan: s.warrantyPlan,
+                plan: site?.warrantyPlan,
               },
             }
           : s
@@ -124,12 +138,12 @@ export const AMCProvider = ({ children }) => {
       date,
       time,
       technician: technicianName,
-      plan: sites.find(s => s.id === id)?.warrantyPlan,
+      plan: site?.warrantyPlan,
     });
   };
 
   // --------------------------------------------------
-  // PROVIDER EXPORT
+  // EXPORT PROVIDER
   // --------------------------------------------------
   return (
     <AMCContext.Provider
