@@ -48,13 +48,20 @@ import CreateNewWarrantyPage from "./components/CreateNewWarrantyPage/CreateNewW
 import Login from "./components/Login/Login";
 
 // --------------------------
+// Add Global Group
+import AddGroup from "./components/AddGroup/AddGroup.js";
+
+
+
+// --------------------------
 // Context
 // --------------------------
 import { AMCProvider } from "./components/AMCContext/AMCContext";
 
-// --------------------------
-// Layout Component
-// --------------------------
+
+// ======================================================
+// Layout Wrapper
+// ======================================================
 function Layout() {
   const location = useLocation();
   const hideNavbar = location.pathname === "/login";
@@ -89,7 +96,7 @@ function Layout() {
         <Route path="/completed-sites" element={<CompletedSites />} />
         <Route path="/amc-sites/pending" element={<PendingSitesPage />} />
 
-        {/* Create New AMC Page */}
+        {/* Create New AMC Site */}
         <Route path="/create-amc-page" element={<CreateNewAmcPage />} />
 
         {/* Calendar */}
@@ -103,14 +110,18 @@ function Layout() {
         <Route path="/create-warranty-site" element={<CreateNewWarrantyPage />} />
         <Route path="/completed-warranty" element={<CompletedWarrantySitesPage />} />
         <Route path="/warranty-sites/:id" element={<WarrantyDetailsPage />} />
+
+        <Route path="/add-group" element={<AddGroup />} />
+
       </Routes>
     </>
   );
 }
 
-// --------------------------
-// Main App Component
-// --------------------------
+
+// ======================================================
+// App Component
+// ======================================================
 function App() {
   return (
     <AMCProvider>

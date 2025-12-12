@@ -28,22 +28,26 @@ const VisitPlaning = () => {
           <div className="card-number">{total}</div>
         </div>
 
-      <div
-  className="summary-card"
-  onClick={() => navigate("/completed-sites")} 
->
-  <div className="card-title">Completed Sites</div>
-  <div className="card-number">{completed + completedWarranty}</div>
-</div>
+        <div
+          className="summary-card"
+          onClick={() => navigate("/completed-sites")}
+        >
+          <div className="card-title">Completed Sites</div>
+          <div className="card-number">{completed + completedWarranty}</div>
+        </div>
 
-
-
-        <div className="summary-card" onClick={() => navigate("/amc-sites/pending")}>
+        <div
+          className="summary-card"
+          onClick={() => navigate("/amc-sites/pending")}
+        >
           <div className="card-title">Pending AMC Sites</div>
           <div className="card-number">{pending}</div>
         </div>
 
-        <div className="summary-card warranty-card" onClick={() => navigate("/warranty-sites")}>
+        <div
+          className="summary-card warranty-card"
+          onClick={() => navigate("/warranty-sites")}
+        >
           <div className="card-title">Warranty Sites</div>
           <div className="card-number">{warranty}</div>
         </div>

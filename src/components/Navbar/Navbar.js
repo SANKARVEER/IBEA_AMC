@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import { useAMC } from "../AMCContext/AMCContext";
 import "./Navbar.css";
 
@@ -13,7 +13,11 @@ function Navbar() {
 
   const handleLogout = () => {
     const date = new Date();
-    const dateString = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+
+    const dateString = `${date.getFullYear()}-${String(
+      date.getMonth() + 1
+    ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+
     const timeString = date.toLocaleTimeString();
 
     // Save calendar logout entry
@@ -24,7 +28,10 @@ function Navbar() {
       time: timeString,
       technician: technicianName,
     };
-    const savedCalendar = JSON.parse(localStorage.getItem("calendarData")) || [];
+
+    const savedCalendar =
+      JSON.parse(localStorage.getItem("calendarData")) || [];
+
     savedCalendar.push(logoutEntry);
     localStorage.setItem("calendarData", JSON.stringify(savedCalendar));
 
@@ -82,24 +89,44 @@ function Navbar() {
 
       {/* Mobile Menu */}
       <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
-        <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
-        <Link to="/amc-sites" onClick={() => setMenuOpen(false)}>AMC</Link>
-        <Link to="/warranty-sites" onClick={() => setMenuOpen(false)}>Warranty</Link>
-        <Link to="/completed-sites" onClick={() => setMenuOpen(false)}>Completed</Link>
-        <Link to="/calendar" onClick={() => setMenuOpen(false)}>Calendar</Link>
+        <Link to="/" onClick={() => setMenuOpen(false)}>
+          Home
+        </Link>
+
+        <Link to="/amc-sites" onClick={() => setMenuOpen(false)}>
+          AMC
+        </Link>
+
+        <Link to="/warranty-sites" onClick={() => setMenuOpen(false)}>
+          Warranty
+        </Link>
+
+        <Link to="/completed-sites" onClick={() => setMenuOpen(false)}>
+          Completed
+        </Link>
+
+        <Link to="/calendar" onClick={() => setMenuOpen(false)}>
+          Calendar
+        </Link>
 
         {technicianName && (
           <>
             <span
               className="mobile-tech clickable"
-              onClick={() => { setMenuOpen(false); navigate("/login"); }}
+              onClick={() => {
+                setMenuOpen(false);
+                navigate("/login");
+              }}
             >
               👨‍🔧 {technicianName}
             </span>
 
             <button
               className="mobile-add-group"
-              onClick={() => { setMenuOpen(false); navigate("/add-group"); }}
+              onClick={() => {
+                setMenuOpen(false);
+                navigate("/add-group");
+              }}
             >
               Add Group
             </button>
@@ -111,6 +138,7 @@ function Navbar() {
         )}
       </div>
 
+      {/* Toast Container */}
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -124,4 +152,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
