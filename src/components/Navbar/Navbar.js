@@ -1,9 +1,10 @@
+// src/components/Navbar/Navbar.js
 import React, { useState } from "react";
-import "./Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useAMC } from "../AMCContext/AMCContext";
 import { ToastContainer, toast } from "react-toastify";
-
+import 'react-toastify/dist/ReactToastify.css';
+import { useAMC } from "../AMCContext/AMCContext";
+import "./Navbar.css";
 
 function Navbar() {
   const { technicianName, logout } = useAMC();
@@ -12,9 +13,7 @@ function Navbar() {
 
   const handleLogout = () => {
     const date = new Date();
-    const dateString = `${date.getFullYear()}-${String(
-      date.getMonth() + 1
-    ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+    const dateString = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
     const timeString = date.toLocaleTimeString();
 
     // Save calendar logout entry
@@ -63,7 +62,6 @@ function Navbar() {
             👨‍🔧 {technicianName}
           </span>
 
-          {/* ⭐ NEW Add Group Button */}
           <button
             className="add-group-btn"
             onClick={() => navigate("/add-group")}
@@ -99,7 +97,6 @@ function Navbar() {
               👨‍🔧 {technicianName}
             </span>
 
-            {/* ⭐ Mobile Add Group Button */}
             <button
               className="mobile-add-group"
               onClick={() => { setMenuOpen(false); navigate("/add-group"); }}
@@ -114,7 +111,14 @@ function Navbar() {
         )}
       </div>
 
-      <ToastContainer />
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        pauseOnHover
+      />
     </header>
   );
 }
