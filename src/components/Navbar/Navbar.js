@@ -3,7 +3,7 @@ import "./Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useAMC } from "../AMCContext/AMCContext";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 
 function Navbar() {
   const { technicianName, logout } = useAMC();
@@ -120,3 +120,4 @@ function Navbar() {
 }
 
 export default Navbar;
+
