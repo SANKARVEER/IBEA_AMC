@@ -1,13 +1,7 @@
 // src/components/AMCContext/AMCContext.js
 import React, { createContext, useContext, useState } from "react";
 
-// --------------------------------------------------
-// Group Members for WhatsApp Notifications
-// --------------------------------------------------
-export const groupMembers = [
-  "+919789530643", // Replace with real numbers including country code
-  "+919551523456",
-];
+
 
 const AMCContext = createContext();
 
@@ -80,19 +74,6 @@ export const AMCProvider = ({ children }) => {
     ).padStart(2, "0")}`;
   };
 
-  // --------------------------------------------------
-  // SEND WHATSAPP MESSAGE
-  // --------------------------------------------------
-  const sendWhatsAppMessage = (site, type = "AMC") => {
-    const message = `✅ ${type} Site Completed!\nSite: ${site.name}\nLocation: ${site.location}\nTechnician: ${technicianName}\nDate: ${new Date().toLocaleDateString()}\nTime: ${new Date().toLocaleTimeString()}`;
-
-    groupMembers.forEach((number) => {
-      const url = `https://wa.me/${number.replace(/\D/g, "")}?text=${encodeURIComponent(
-        message
-      )}`;
-      window.open(url, "_blank");
-    });
-  };
 
   // --------------------------------------------------
   // ADD TO CALENDAR
@@ -133,7 +114,6 @@ export const AMCProvider = ({ children }) => {
       seatType,
     });
 
-    // sendWhatsAppMessage(site, "AMC");
   };
 
   // --------------------------------------------------
@@ -166,7 +146,6 @@ export const AMCProvider = ({ children }) => {
       plan: site?.warrantyPlan,
     });
 
-    // sendWhatsAppMessage(site, "Warranty");
   };
 
   // --------------------------------------------------
