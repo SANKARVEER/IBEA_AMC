@@ -1,0 +1,73 @@
+/* --- Layout Grid --- */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 22px;
+  padding: 25px;
+  background: #f4f6f9;
+}
+
+/* --- Card Box --- */
+.amc-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
+  border-left: 6px solid #007bff;
+  transition: 0.25s ease;
+}
+
+.amc-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.20);
+}
+
+/* --- Title --- */
+.amc-card h3 {
+  margin: 0 0 10px 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #333;
+}
+
+/* --- Info Text --- */
+.amc-card p {
+  margin: 5px 0;
+  font-size: 15px;
+  color: #444;
+}
+
+.amc-card strong {
+  color: #222;
+}
+
+/* --- Finish Button --- */
+.view-btn {
+  margin-top: 15px;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #007bff;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.view-btn:hover {
+  background: #0056b3;
+}
+
+/* --- ⭐ Completed Button --- */
+.star-btn {
+  background: gold !important;
+  color: #000 !important;
+  border: 2px solid #d4af37;
+  font-weight: bold;
+}
+
+.star-btn:hover {
+  background: #f3d255 !important;
+}
