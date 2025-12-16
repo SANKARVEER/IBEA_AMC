@@ -1,47 +1,43 @@
-/* Navbar - Responsive and Mobile Slide-down */
-
-/* Basic layout */
+/* =========================
+   Navbar Base
+========================= */
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #0f1724; /* dark background */
-  padding: 12px 18px;
+  padding: 12px 16px;
+  background-color: #0a2540;
   color: #fff;
-  position: sticky;
-  top: 0;
-  z-index: 9999; /* high so mobile menu stays on top */
+  position: relative;
+  height: 60px;
 }
 
 /* Logo */
 .navbar-logo {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
-  letter-spacing: 0.2px;
+  white-space: nowrap;
 }
 
-/* Desktop links (default visible) */
+/* =========================
+   Desktop Menu
+========================= */
 .navbar-links {
   display: flex;
-  gap: 18px;
-  align-items: center;
+  gap: 22px;
 }
 
-.navbar-links a,
-.navbar-links .router-link {
+.navbar-links a {
   color: #fff;
   text-decoration: none;
   font-size: 15px;
-  font-weight: 500;
-  padding: 6px 8px;
-  border-radius: 6px;
 }
 
 .navbar-links a:hover {
-  background: rgba(255,255,255,0.05);
+  color: #00d4ff;
 }
 
-/* Right side: tech + logout */
+/* Right Section */
 .nav-right {
   display: flex;
   align-items: center;
@@ -49,125 +45,83 @@
 }
 
 .tech-name {
-  font-weight: 600;
-  font-size: 15px;
+  cursor: pointer;
+  font-weight: 500;
 }
 
-.clickable { cursor: pointer; text-decoration: none; }
-
-/* Logout button */
-.logout-btn,
-.mobile-logout {
-  background: #e11d48; /* red */
-  color: white;
+.add-group-btn,
+.logout-btn {
   padding: 6px 12px;
-  border-radius: 8px;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
-  font-weight: 600;
+  font-size: 14px;
 }
 
-.logout-btn:hover,
-.mobile-logout:hover { opacity: 0.95; }
+.add-group-btn {
+  background-color: #00d4ff;
+  color: #000;
+}
 
-/* Hamburger (hidden on desktop) */
+.logout-btn {
+  background-color: #ff4d4d;
+  color: #fff;
+}
+
+/* =========================
+   Hamburger Icon
+========================= */
 .hamburger {
-  display: none;
+  display: none;          /* Hidden on desktop */
   font-size: 26px;
-  line-height: 1;
   cursor: pointer;
-  user-select: none;
-  color: #fff;
+  margin-left: auto;      /* Push to right */
 }
 
-/* Mobile menu - hidden by default (off-screen) */
+/* =========================
+   Mobile Menu
+========================= */
 .mobile-menu {
-  display: none;
-  position: fixed;
-  top: 60px; /* just below navbar */
+  position: absolute;
+  top: 60px;
   left: 0;
-  right: 0;
-  background: #0b1220;
-  padding: 18px;
-  gap: 14px;
+  width: 100%;
+  background-color: #0a2540;
+  display: none;
   flex-direction: column;
-  transform: translateY(-12px);
-  opacity: 0;
-  pointer-events: none;
-  transition: transform 220ms ease, opacity 220ms ease;
-  z-index: 9998;
+  padding: 16px;
+  z-index: 999;
 }
 
-/* Mobile menu open state */
 .mobile-menu.open {
-  display: flex;              /* flex so links stack vertically */
-  transform: translateY(0);
-  opacity: 1;
-  pointer-events: auto;
+  display: flex;
 }
 
-/* Mobile menu items */
 .mobile-menu a,
-.mobile-menu .mobile-tech {
+.mobile-menu button,
+.mobile-menu span {
   color: #fff;
-  text-decoration: none;
-  font-size: 17px;
-  padding: 10px 8px;
-  border-radius: 8px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 16px;
+  padding: 10px 0;
+  cursor: pointer;
 }
 
-.mobile-menu a:hover {
-  background: rgba(255,255,255,0.03);
-}
-
-/* small adjustments for tech name in mobile */
-.mobile-tech {
-  display: block;
-  margin-top: 8px;
-  font-weight: 600;
-  color: #7dd3fc;
-}
-
-/* Responsive breakpoint */
-@media (max-width: 850px) {
-  /* hide desktop links and right-side controls */
-  .navbar-links,
-  .nav-right {
-    display: none !important;
+/* =========================
+   📱 Mobile View
+========================= */
+@media (max-width: 768px) {
+  .navbar-links {
+    display: none;
   }
 
-  /* show hamburger */
+  .nav-right {
+    display: none;
+  }
+
   .hamburger {
     display: block;
   }
-
-  /* mobile menu will be displayed via .open class */
-  .mobile-menu {
-    display: none; /* explicit; .open will override */
-  }
-}
-
-/* Extra: make sure links inside nav don't get outline weirdness */
-.navbar a:focus,
-.mobile-menu a:focus,
-.logout-btn:focus {
-  outline: 2px solid rgba(125,211,252,0.16);
-  outline-offset: 2px;
-}
-.add-group-btn,
-.mobile-add-group {
-  background: #007bff;
-  color: white;
-  border: none;
-  padding: 6px 12px;
-  margin-right: 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: 0.3s;
-}
-
-.add-group-btn:hover,
-.mobile-add-group:hover {
-  background: #005ec9;
 }

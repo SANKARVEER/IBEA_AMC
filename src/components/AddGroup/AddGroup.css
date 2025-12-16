@@ -1,66 +1,99 @@
-/* src/components/AddGroup/AddGroup.css */
-
+/* ================================
+   Add Group Page
+================================ */
 .add-group-page {
-  max-width: 500px;
+  max-width: 480px;
   margin: 40px auto;
-  padding: 20px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  font-family: "Segoe UI", sans-serif;
 }
 
+/* Title */
 .add-group-page h2 {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   font-size: 1.8rem;
+  color: #0a2540;
 }
 
+/* Labels */
 .add-group-page label {
   display: block;
-  margin-bottom: 8px;
-  font-weight: 500;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Inputs */
+.add-group-page input,
+.add-group-page textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 18px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.add-group-page input:focus,
+.add-group-page textarea:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
 }
 
 .add-group-page textarea {
-  width: 100%;
-  height: 80px;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  margin-bottom: 15px;
+  height: 90px;
   resize: none;
-  font-size: 1rem;
 }
 
-.add-group-page .save-btn {
+/* Save Button */
+.save-btn {
   width: 100%;
-  padding: 10px;
-  background: #007bff;
+  padding: 12px;
+  background: linear-gradient(135deg, #007bff, #0056b3);
   color: #fff;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 1rem;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.add-group-page .save-btn:hover {
-  background: #0056b3;
+.save-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(0, 123, 255, 0.3);
 }
 
+/* Saved Group Box */
 .saved-group-box {
-  margin-top: 20px;
-  padding: 15px;
-  background: #f7f7f7;
-  border-radius: 8px;
+  margin-top: 24px;
+  padding: 16px;
+  background: #f1f7ff;
+  border-radius: 10px;
+  border-left: 4px solid #007bff;
 }
 
 .saved-group-box h3 {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  color: #007bff;
 }
 
-.saved-number {
-  padding: 8px 0;
-  border-bottom: 1px solid #ddd;
-  font-size: 0.95rem;
+/* ================================
+   📱 Mobile View
+================================ */
+@media (max-width: 480px) {
+  .add-group-page {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  .add-group-page h2 {
+    font-size: 1.5rem;
+  }
 }

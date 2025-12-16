@@ -1,63 +1,59 @@
-// src/components/AddGroup/AddGroup.js
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./AddGroup.css";
 
 const AddGroup = () => {
-  const [numbers, setNumbers] = useState("");
-  const [savedGroup, setSavedGroup] = useState({ members: [] });
-
-  // Load existing group from localStorage
-  useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("globalGroup"))?.[0] || { members: [] };
-    setSavedGroup(stored);
-  }, []);
+  const [groupName, setGroupName] = useState("");
+  const [members, setMembers] = useState("");
+  const [saved, setSaved] = useState(false);
 
   const saveGroup = () => {
-    if (!numbers.trim()) {
-      alert("Please enter at least one mobile number");
-      return;
-    }
-
-    const numberList = numbers
+    const numbers = members
       .split(",")
-      .map((num) => num.trim())
-      .filter((num) => num.length >= 10); // basic validation
+      .map((n) => n.replace(/\s+/g, ""))
+      .filter((n) => n.length >= 10);
 
-    if (numberList.length === 0) {
-      alert("Invalid numbers!");
+    if (!groupName || numbers.length === 0) {
+      alert("Enter group name and valid numbers");
       return;
     }
 
-    const group = [{ id: 1, members: numberList }];
-    localStorage.setItem("globalGroup", JSON.stringify(group));
-    setSavedGroup(group[0]);
+    localStorage.setItem(
+      "globalGroup",
+      JSON.stringify([{ name: groupName, members: numbers }])
+    );
 
-    alert("Group saved successfully!");
+    setSaved(true);
   };
 
   return (
     <div className="add-group-page">
       <h2>Add WhatsApp Group</h2>
 
-      <label>Enter WhatsApp Numbers (comma separated)</label>
+      <label>Group Name</label>
+      <input
+        type="text"
+        placeholder="Eg: AMC Technicians"
+        value={groupName}
+        onChange={(e) => setGroupName(e.target.value)}
+      />
+
+      <label>WhatsApp Numbers</label>
       <textarea
-        placeholder="Ex: 9876543210, 9876501234"
-        value={numbers}
-        onChange={(e) => setNumbers(e.target.value)}
-      ></textarea>
+        placeholder="919789530643, 919551112345"
+        value={members}
+        onChange={(e) => setMembers(e.target.value)}
+      />
 
       <button className="save-btn" onClick={saveGroup}>
         Save Group
       </button>
 
-      {savedGroup.members.length > 0 && (
+      {saved && (
         <div className="saved-group-box">
-          <h3>Saved Group Members</h3>
-          {savedGroup.members.map((num, index) => (
-            <div key={index} className="saved-number">
-              {num}
-            </div>
-          ))}
+          <h3>✅ Group Saved</h3>
+          <p>
+            <strong>{groupName}</strong>
+          </p>
         </div>
       )}
     </div>
