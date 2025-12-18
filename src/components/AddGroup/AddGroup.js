@@ -17,11 +17,14 @@ const AddGroup = () => {
       return;
     }
 
-    localStorage.setItem(
-      "globalGroup",
-      JSON.stringify([{ name: groupName, members: numbers }])
-    );
+    const globalGroup = [
+      {
+        name: groupName,
+        members: numbers,
+      },
+    ];
 
+    localStorage.setItem("globalGroup", JSON.stringify(globalGroup));
     setSaved(true);
   };
 
@@ -39,7 +42,7 @@ const AddGroup = () => {
 
       <label>WhatsApp Numbers</label>
       <textarea
-        placeholder="919789530643, 919551112345"
+        placeholder="9198xxxxxxx, 9197xxxxxxx"
         value={members}
         onChange={(e) => setMembers(e.target.value)}
       />
@@ -51,9 +54,7 @@ const AddGroup = () => {
       {saved && (
         <div className="saved-group-box">
           <h3>✅ Group Saved</h3>
-          <p>
-            <strong>{groupName}</strong>
-          </p>
+          <p><strong>{groupName}</strong></p>
         </div>
       )}
     </div>

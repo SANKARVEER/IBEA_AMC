@@ -1,27 +1,23 @@
 // src/utils/sendMessage.js
+const sendMessage = ({ site, type, technicianName }) => {
+  const savedGroup =
+    JSON.parse(localStorage.getItem("globalGroup")) || [];
 
-const sendMessage = ({ site, type = "AMC", technicianName }) => {
-  if (!site) return;
+  if (!savedGroup.length) return;
 
-  const message = `✅ ${type} Site Completed!
-Site: ${site.name}
-Location: ${site.location}
-Technician: ${technicianName}
-Date: ${new Date().toLocaleDateString()}
-Time: ${new Date().toLocaleTimeString()}`;
+  const group = savedGroup[0];
 
-  // Global group (only ONE group)
-  const groups = JSON.parse(localStorage.getItem("globalGroup")) || [];
+  const message = `✅ ${type} Site Completed
+🏢 Site: ${site.name}
+📍 Location: ${site.location}
+👨‍🔧 Technician: ${technicianName}
+🕒 Time: ${new Date().toLocaleTimeString()}`;
 
-  if (!groups.length || !groups[0].members?.length) {
-    alert("❌ No global group found. Please add a group first.");
-    return;
-  }
+  group.members.forEach((number) => {
+    const url = `https://wa.me/${number}?text=${encodeURIComponent(
+      message
+    )}`;
 
-  const members = groups[0].members;
-
-  members.forEach((number) => {
-    const url = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
   });
 };

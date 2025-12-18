@@ -1,79 +1,72 @@
 import React from "react";
-import "./amcsitespage.css";
+import "./amcsitespage.css"; // Reuse CSS for consistent styling
 import { useNavigate } from "react-router-dom";
 import { useAMC } from "../AMCContext/AMCContext";
-import sendMessage from "../../utils/sendMessage";
 
 const AmcSitesPage = () => {
   const navigate = useNavigate();
-
-  const {
-    sites = [],
-    markCompleted,
-    technicianName,
-  } = useAMC();
+  const { sites = [], markCompleted, technicianName } = useAMC();
 
   const handleFinish = (site) => {
     if (site.completed) return;
 
-    markCompleted(site.id);
-
-    sendMessage({
-      site,
-      type: "AMC",
-      technicianName,
+    // Mark as completed and store relevant info
+    markCompleted(site.id, {
+      technician: technicianName,
+      whatsappGroup: site.serviceInfo?.whatsappGroup || { name: "Default Group", members: [] },
+      date: new Date().toLocaleDateString(),
+      time: new Date().toLocaleTimeString(),
     });
   };
 
-  const activeSites = sites.filter((site) => !site.completed);
-
   return (
     <div className="amc-sites-page">
-      {/* ================= Top Bar ================= */}
       <div className="top-bar">
-        <h2 className="page-headline">AMC Sites</h2>
-
+        <h2>AMC Sites</h2>
         <button
           className="create-btn"
-          onClick={() => navigate("/create-amc-page")}
+          onClick={() => navigate("/create-amc-site")}
         >
-          + Create a New Page
+          + Create a New AMC Site
         </button>
       </div>
 
-      {/* ================= Cards ================= */}
       <div className="cards-container">
-        {activeSites.length === 0 ? (
-          <p className="empty-text">No AMC sites available</p>
-        ) : (
-          activeSites.map((site) => (
+        {sites
+          .filter((site) => !site.completed || site.completed) // Show all sites
+          .map((site) => (
             <div className="amc-card" key={site.id}>
-              <div className="card-header">
-                <h3>{site.name}</h3>
-              </div>
+              <h3>{site.name}</h3>
+              <p><strong>Address:</strong> {site.address}</p>
+              <p><strong>Area:</strong> {site.area}</p>
+              <p><strong>Location:</strong> {site.location}</p>
 
-              <p>
-                <strong>Address:</strong> {site.address}
-              </p>
+              {/* Pending site: Finish button */}
+              {!site.completed && (
+                <button
+                  className="view-btn"
+                  onClick={() => handleFinish(site)}
+                >
+                  Finish →
+                </button>
+              )}
 
-              <p>
-                <strong>Area:</strong> {site.area}
-              </p>
-
-              <p>
-                <strong>Location:</strong> {site.location}
-              </p>
-
-              <button
-                className="view-btn"
-                onClick={() => handleFinish(site)}
-                disabled={site.completed}
-              >
-                Finished →
-              </button>
+              {/* Completed site: show all stored info */}
+              {site.completed && (
+                <>
+                  <p><strong>Technician:</strong> {site.serviceInfo?.technician || technicianName}</p>
+                  <p><strong>WhatsApp Group:</strong> {site.serviceInfo?.whatsappGroup?.name || "-"}</p>
+                  <p>
+                    <strong>Group Members:</strong>{" "}
+                    {site.serviceInfo?.whatsappGroup?.members?.join(", ") || "-"}
+                  </p>
+                  <p><strong>Date:</strong> {site.serviceInfo?.date || "-"}</p>
+                  <p><strong>Time:</strong> {site.serviceInfo?.time || "-"}</p>
+                  <span className="completed-badge">✅ Completed</span>
+                </>
+              )}
             </div>
-          ))
-        )}
+          ))}
       </div>
     </div>
   );

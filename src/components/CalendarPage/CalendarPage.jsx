@@ -12,11 +12,11 @@ const CalendarPage = () => {
   const [selectedDate, setSelectedDate] = useState(null);
 
   const monthNames = [
-    "January","February","March","April","May","June",
-    "July","August","September","October","November","December"
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
   ];
 
-  // All completed dates (both AMC & Warranty)
+  // Collect all completed dates (AMC + Warranty)
   const completedDates = Array.from(new Set([
     ...sites.filter(s => s.completedDate).map(s => s.completedDate),
     ...sites.filter(s => s.warrantyCompletedDate).map(s => s.warrantyCompletedDate),
@@ -46,65 +46,54 @@ const CalendarPage = () => {
   const handleDayClick = (day) => {
     if (!day) return;
 
-    const formatted = `${currentYear}-${String(currentMonth + 1).padStart(
-      2,
-      "0"
-    )}-${String(day).padStart(2, "0")}`;
-
+    const formatted = `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
     setSelectedDate(formatted);
   };
 
-  // Combined results for selected date (AMC + Warranty)
+  // Combine AMC + Warranty results
   const combinedResults = [
-    ...sites
-      .filter((s) => s.completedDate === selectedDate)
-      .map((s) => ({ ...s, type: "AMC" })),
-    ...sites
-      .filter((s) => s.warrantyCompletedDate === selectedDate)
-      .map((s) => ({ ...s, type: "Warranty" })),
+    ...sites.filter(s => s.completedDate === selectedDate).map(s => ({ ...s, type: "AMC" })),
+    ...sites.filter(s => s.warrantyCompletedDate === selectedDate).map(s => ({ ...s, type: "Warranty" })),
   ];
 
-  // Build calendar array
+  // Calendar day list
   const daysArray = [];
   for (let i = 0; i < firstDay; i++) daysArray.push("");
   for (let i = 1; i <= totalDays; i++) daysArray.push(i);
 
   return (
     <div className="calendar-container">
-      {/* Calendar Header */}
+      
+      {/* ----- Header ----- */}
       <div className="calendar-header">
         <button onClick={prevMonth}>◀</button>
         <h2>{monthNames[currentMonth]} {currentYear}</h2>
         <button onClick={nextMonth}>▶</button>
       </div>
 
-      {/* Calendar Grid */}
+      {/* ----- Calendar Grid ----- */}
       <div className="calendar-grid">
         {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d) => (
           <div key={d} className="day-name">{d}</div>
         ))}
 
         {daysArray.map((day, index) => {
-          const dateString =
-            day &&
-            `${currentYear}-${String(currentMonth + 1).padStart(
-              2,
-              "0"
-            )}-${String(day).padStart(2, "0")}`;
+          const dateString = day
+            ? `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`
+            : null;
 
-          const isCompletedDay = completedDates.includes(dateString);
+          const isCompleted = completedDates.includes(dateString);
 
           return (
             <div
               key={index}
-              className={`day-box 
+              className={`day-box
                 ${day === today.getDate() &&
-                  currentMonth === today.getMonth() &&
-                  currentYear === today.getFullYear()
+                currentMonth === today.getMonth() &&
+                currentYear === today.getFullYear()
                   ? "today"
-                  : ""
-                } 
-                ${isCompletedDay ? "completed-day" : ""}
+                  : ""}
+                ${isCompleted ? "completed-day" : ""}
               `}
               onClick={() => handleDayClick(day)}
             >
@@ -114,7 +103,7 @@ const CalendarPage = () => {
         })}
       </div>
 
-      {/* Results */}
+      {/* ----- Results Below Calendar ----- */}
       {selectedDate && (
         <div className="results-box">
           <h3>Completed Sites on {selectedDate}</h3>
@@ -125,28 +114,28 @@ const CalendarPage = () => {
             <div className="results-cards">
               {combinedResults.map((site) => (
                 <div className="site-card" key={site.id}>
+                  
                   <div className="card-header">
                     <h4>{site.name}</h4>
-                    <span
-                      className={`tag ${site.type === "AMC" ? "amc" : "warranty"}`}
-                    >
+                    <span className={`tag ${site.type === "AMC" ? "amc" : "warranty"}`}>
                       {site.type}
                     </span>
                   </div>
 
                   <p><strong>Location:</strong> {site.location}</p>
                   <p><strong>Date:</strong> {site.completedDate || site.warrantyCompletedDate}</p>
+
                   <p>
                     <strong>Technician:</strong>{" "}
                     {site.type === "AMC"
                       ? site?.serviceInfo?.technician
-                      : site?.warrantyInfo?.technician
-                    }
+                      : site?.warrantyInfo?.technician}
                   </p>
 
                   {site.type === "Warranty" && (
                     <p><strong>Plan:</strong> {site.warrantyPlan}</p>
                   )}
+
                 </div>
               ))}
             </div>

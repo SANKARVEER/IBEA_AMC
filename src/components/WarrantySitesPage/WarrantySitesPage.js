@@ -1,92 +1,71 @@
 import React from "react";
-import "./WarrantySitesPage.css";
-import { useAMC } from "../AMCContext/AMCContext";
+import "./WarrantySitesPage.css"; // Reuse AMC page CSS for consistent style
 import { useNavigate } from "react-router-dom";
+import { useAMC } from "../AMCContext/AMCContext";
 
 const WarrantySitesPage = () => {
   const navigate = useNavigate();
-  const { sites, markWarrantyCompleted, technicianName } = useAMC();
+  const { sites = [], markWarrantyCompleted, technicianName } = useAMC();
 
-  // Send WhatsApp message to all members of the single global group
-  const sendMessage = (site, type = "Warranty") => {
-    const plan = site?.warrantyPlan || "MS";
-    const message = `✅ ${type} Site Completed!
-Site: ${site.name}
-Location: ${site.location}
-Technician: ${technicianName || "Technician"}
-Plan: ${plan}
-Date: ${site.warrantyInfo?.date || new Date().toLocaleDateString()}
-Time: ${site.warrantyInfo?.time || new Date().toLocaleTimeString()}`;
-
-    const groups = JSON.parse(localStorage.getItem("globalGroup")) || [];
-
-    if (!groups.length) {
-      alert("No group found. Please add a global group first.");
-      return;
-    }
-
-    const groupMembers = groups[0].members || [];
-
-    if (!groupMembers.length) {
-      alert("Global group has no members. Please add members.");
-      return;
-    }
-
-    groupMembers.forEach((number) => {
-      const url = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
-      window.open(url, "_blank");
-    });
-  };
-
-  // Handler: mark warranty completed then send message
   const handleWarrantyDone = (site) => {
-    markWarrantyCompleted(site.id);
-    setTimeout(() => sendMessage(site, "Warranty"), 50);
+    if (site.warrantyCompleted) return;
+
+    // Mark the site as completed and store all necessary info
+    markWarrantyCompleted(site.id, {
+      technician: technicianName,
+      whatsappGroup: site.warrantyInfo?.whatsappGroup || { name: "Default Group", members: [] },
+      date: new Date().toLocaleDateString(),
+      time: new Date().toLocaleTimeString(),
+    });
   };
 
   return (
     <div className="amc-sites-page">
-      {/* Top Bar */}
       <div className="top-bar">
-        <h2 className="page-headline">Warranty Sites</h2>
+        <h2>Warranty Sites</h2>
 
         <button
           className="create-btn"
           onClick={() => navigate("/create-warranty-site")}
         >
-          + Create New Warranty Site
+          + Create a New Warranty Site
         </button>
       </div>
 
       <div className="cards-container">
         {sites
-          .filter((s) => s.warranty && !s.warrantyCompleted) // Only pending Warranty sites
+          .filter((site) => site.warranty)
           .map((site) => (
             <div className="amc-card" key={site.id}>
-              <div className="card-header">
-                <h3>{site.name}</h3>
-              </div>
+              <h3>{site.name}</h3>
+              <p><strong>Address:</strong> {site.address}</p>
+              <p><strong>Area:</strong> {site.area}</p>
+              <p><strong>Location:</strong> {site.location}</p>
 
-              <p>
-                <strong>Address:</strong> {site.address}
-              </p>
-              <p>
-                <strong>Area:</strong> {site.area}
-              </p>
-              <p>
-                <strong>Location:</strong> {site.location}
-              </p>
-
-              <div className="card-actions">
+              {/* Pending site: Finish button */}
+              {!site.warrantyCompleted && (
                 <button
-                  className={`view-btn ${site.warrantyCompleted ? "star-btn" : ""}`}
+                  className="view-btn"
                   onClick={() => handleWarrantyDone(site)}
                 >
-                  {site.warrantyCompleted ? "⭐ Done" : "Warranty Done →"}
+                  Finish →
                 </button>
+              )}
 
-                
-              </div>
+              {/* Completed site: show all stored info */}
+              {site.warrantyCompleted && (
+                <>
+                  <p><strong>Technician:</strong> {site.warrantyInfo?.technician || technicianName}</p>
+                  <p><strong>WhatsApp Group:</strong> {site.warrantyInfo?.whatsappGroup?.name || "-"}</p>
+                  <p>
+                    <strong>Group Members:</strong>{" "}
+                    {site.warrantyInfo?.whatsappGroup?.members?.join(", ") || "-"}
+                  </p>
+                  <p><strong>Date:</strong> {site.warrantyInfo?.date || "-"}</p>
+                  <p><strong>Time:</strong> {site.warrantyInfo?.time || "-"}</p>
+                  <span className="completed-badge">✅ Completed</span>
+                </>
+              )}
             </div>
           ))}
       </div>
