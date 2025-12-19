@@ -12,45 +12,23 @@ function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
-    const date = new Date();
-
-    const dateString = `${date.getFullYear()}-${String(
-      date.getMonth() + 1
-    ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-
-    const timeString = date.toLocaleTimeString();
-
-    // Save calendar logout entry
-    const logoutEntry = {
-      id: Date.now(),
-      type: "Logout",
-      date: dateString,
-      time: timeString,
-      technician: technicianName,
-    };
-
-    const savedCalendar =
-      JSON.parse(localStorage.getItem("calendarData")) || [];
-
-    savedCalendar.push(logoutEntry);
-    localStorage.setItem("calendarData", JSON.stringify(savedCalendar));
-
     logout();
-
-    toast.success("You have successfully logged out!", {
-      position: "top-right",
-      autoClose: 2000,
+    toast.success("✔ Logged out successfully!", {
+      autoClose: 1500,
     });
 
-    setTimeout(() => navigate("/login"), 2000);
+    setTimeout(() => navigate("/login"), 1500);
   };
 
   return (
     <header className="navbar">
-      {/* Logo */}
-      <div className="navbar-logo">Ibea Elevators</div>
 
-      {/* Desktop Menu */}
+      {/* Logo */}
+      <div className="navbar-logo" onClick={() => navigate("/")}>
+        Ibea Elevators
+      </div>
+
+      {/* Desktop menu */}
       <nav className="navbar-links">
         <Link to="/">Home</Link>
         <Link to="/amc-sites">AMC</Link>
@@ -59,67 +37,67 @@ function Navbar() {
         <Link to="/calendar">Calendar</Link>
       </nav>
 
-      {/* Technician + Add Group + Logout */}
-      {technicianName && (
-        <div className="nav-right">
-          <span
-            className="tech-name clickable"
-            onClick={() => navigate("/login")}
-          >
-            👨‍🔧 {technicianName}
-          </span>
+      <div className="nav-right">
 
-          <button
-            className="add-group-btn"
-            onClick={() => navigate("/add-group")}
-          >
-            Add Group
+        {/* Before login show login button */}
+        {!technicianName && (
+          <button className="login-btn" onClick={() => navigate("/login")}>
+            Login
           </button>
+        )}
 
-          <button className="logout-btn" onClick={handleLogout}>
-            Logout
-          </button>
-        </div>
-      )}
+        {/* After login show name + add group + logout */}
+        {technicianName && (
+          <>
+            <span
+              className="tech-name"
+              onClick={() => navigate("/login")}
+            >
+              👨‍🔧 {technicianName}
+            </span>
 
-      {/* Hamburger */}
+            <button
+              className="add-group-btn"
+              onClick={() => navigate("/add-group")}
+            >
+              Add Group
+            </button>
+
+            <button className="logout-btn" onClick={handleLogout}>
+              Logout
+            </button>
+          </>
+        )}
+      </div>
+
+      {/* Mobile Icon */}
       <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
         ☰
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile dropdown menu */}
       <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
-        <Link to="/" onClick={() => setMenuOpen(false)}>
-          Home
-        </Link>
+        <Link onClick={() => setMenuOpen(false)} to="/">Home</Link>
+        <Link onClick={() => setMenuOpen(false)} to="/amc-sites">AMC</Link>
+        <Link onClick={() => setMenuOpen(false)} to="/warranty-sites">Warranty</Link>
+        <Link onClick={() => setMenuOpen(false)} to="/completed-sites">Completed</Link>
+        <Link onClick={() => setMenuOpen(false)} to="/calendar">Calendar</Link>
 
-        <Link to="/amc-sites" onClick={() => setMenuOpen(false)}>
-          AMC
-        </Link>
-
-        <Link to="/warranty-sites" onClick={() => setMenuOpen(false)}>
-          Warranty
-        </Link>
-
-        <Link to="/completed-sites" onClick={() => setMenuOpen(false)}>
-          Completed
-        </Link>
-
-        <Link to="/calendar" onClick={() => setMenuOpen(false)}>
-          Calendar
-        </Link>
+        {!technicianName && (
+          <button
+            className="mobile-login-btn"
+            onClick={() => {
+              setMenuOpen(false);
+              navigate("/login");
+            }}
+          >
+            Login
+          </button>
+        )}
 
         {technicianName && (
           <>
-            <span
-              className="mobile-tech clickable"
-              onClick={() => {
-                setMenuOpen(false);
-                navigate("/login");
-              }}
-            >
-              👨‍🔧 {technicianName}
-            </span>
+            <span className="mobile-tech">👨‍🔧 {technicianName}</span>
 
             <button
               className="mobile-add-group"
@@ -131,22 +109,17 @@ function Navbar() {
               Add Group
             </button>
 
-            <button className="mobile-logout" onClick={handleLogout}>
+            <button
+              className="mobile-logout"
+              onClick={handleLogout}
+            >
               Logout
             </button>
           </>
         )}
       </div>
 
-      {/* Toast Container */}
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        pauseOnHover
-      />
+      <ToastContainer />
     </header>
   );
 }

@@ -21,7 +21,7 @@ const WarrantyDetailsPage = () => {
         <p><strong>Location:</strong> {site.location}</p>
 
         <h3>Warranty Info</h3>
-        <p><strong>Plan:</strong> {site.warrantyPlan}</p>
+        {/* <p><strong>Plan:</strong> {site.warrantyPlan}</p> */}
         <p><strong>Date:</strong> {site.warrantyInfo?.date || "-"}</p>
         <p><strong>Time:</strong> {site.warrantyInfo?.time || "-"}</p>
         <p><strong>Technician:</strong> {site.warrantyInfo?.technician || "-"}</p>

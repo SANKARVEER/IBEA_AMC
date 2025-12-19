@@ -9,19 +9,19 @@ const Login = () => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
 
-  const { setTechnicianName } = useAMC();
+  const { login } = useAMC();
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
 
-    if (name.trim() === "" || phone.trim() === "" || password.trim() === "") {
+    if (!name.trim() || !phone.trim() || !password.trim()) {
       alert("Please fill all fields: Name, Phone, and Password");
       return;
     }
 
-    // Save technician name to context
-    setTechnicianName(name);
+    // Save technician name
+    login(name);
 
     // Redirect to Home
     navigate("/");
