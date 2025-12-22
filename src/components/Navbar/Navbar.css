@@ -45,7 +45,7 @@
 .login-btn,
 .logout-btn,
 .add-group-btn {
-  background: #00d8ff;
+  background: #0b8741;
   border: none;
   padding: 6px 10px;
   border-radius: 6px;
@@ -96,4 +96,15 @@
   .hamburger {
     display: block;
   }
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+}
+
+/* Pushes the login button to the end */
+.nav-end {
+  margin-left: auto;
 }

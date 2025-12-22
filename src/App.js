@@ -1,80 +1,69 @@
-// src/App.js
+// ======================================================
+// Imports
+// ======================================================
 import React from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
-// ======================================================
-// Layout Components
-// ======================================================
+// -------------------- Context --------------------
+import { AMCProvider, useAMC } from "./components/AMCContext/AMCContext";
+
+// -------------------- Layout Components --------------------
 import Navbar from "./components/Navbar/Navbar";
 import Header from "./components/Header/Header";
 import AMC from "./components/AMC/AMC";
 import AMC_Plans from "./components/AMC_Plans/AMC_Plans";
 import WhyChooseanAMC from "./components/WhyChooseAnAMC/WhyChooseAnAMC";
-import VisitPlaning from "./components/visitPlaning/visitplaning";
+import VisitPlaning from "./components/visitPlaning/visitplaning"; // file name on disk: visitplaning.js
 import Contact from "./components/Contact/Contact";
 import Footer from "./components/Footer/Footer";
 
-// ======================================================
-// AMC Pages
-// ======================================================
-import AmcSitesPage from "./components/AmcSitePages/amcsitespage";
-import AmcSiteDetails from "./components/AmcSiteDetailes/amcsitedetails";
+// -------------------- AMC Pages --------------------
+import AmcSitesPage from "./components/AmcSitePages/amcsitespage"; // file: amcsitespage.js
+import AmcSiteDetails from "./components/AmcSiteDetailes/amcsitedetails"; // file: amcsitedetails.js
 import CompletedSites from "./components/CompletedSitePage/CompletedSitePage";
 import PendingSitesPage from "./components/PendingSitesPage/PendingSitesPage";
 import CreateNewAmcPage from "./components/CreateNewAmcPage/CreateNewAmcPage";
 
-// ======================================================
-// Calendar
-// ======================================================
+// -------------------- Calendar --------------------
 import CalendarPage from "./components/CalendarPage/CalendarPage";
 
-// ======================================================
-// Service Completion
-// ======================================================
+// -------------------- Service Completion --------------------
 import ServiceCompletionPage from "./components/ServiceCompletionPage/ServiceCompletionPage";
 
-// ======================================================
-// Warranty Pages
-// ======================================================
+// -------------------- Warranty Pages --------------------
 import WarrantySitesPage from "./components/WarrantySitesPage/WarrantySitesPage";
 import CompletedWarrantySitesPage from "./components/WarrantySitesPage/CompletedWarrantySitesPage";
 import WarrantyDetailsPage from "./components/WarrantySitesPage/WarrantyDetailsPage";
 import CreateNewWarrantyPage from "./components/CreateNewWarrantyPage/CreateNewWarrantyPage";
 
-// ======================================================
-// Login
-// ======================================================
+// -------------------- Login --------------------
 import Login from "./components/Login/Login";
 
-// ======================================================
-// Add Global Group
-// ⚠️ Folder + file names MUST match exactly (case-sensitive)
-// src/components/AddGroup/AddGroup.js
-// ======================================================
+// -------------------- Add Group --------------------
 import AddGroup from "./components/AddGroup/AddGroup";
 
-// ======================================================
-// Context
-// ======================================================
-import { AMCProvider } from "./components/AMCContext/AMCContext";
 
 // ======================================================
-// Layout Wrapper
+// Layout Component
 // ======================================================
 function Layout() {
   const location = useLocation();
   const hideNavbar = location.pathname === "/login";
 
+  const { technicianName } = useAMC();
+
   return (
     <>
+      {/* Hide Navbar only on Login Page */}
       {!hideNavbar && <Navbar />}
 
       <Routes>
-        {/* Login */}
+
+        {/* -------------------- Login -------------------- */}
         <Route path="/login" element={<Login />} />
 
-        {/* Home */}
+        {/* -------------------- Home Page -------------------- */}
         <Route
           path="/"
           element={
@@ -83,50 +72,43 @@ function Layout() {
               <AMC />
               <AMC_Plans />
               <WhyChooseanAMC />
-              <VisitPlaning />
+
+              {/* VisitPlaning only visible after login */}
+              {technicianName && <VisitPlaning />}
+
               <Contact />
               <Footer />
             </div>
           }
         />
 
-        {/* AMC */}
+        {/* -------------------- AMC Routes -------------------- */}
         <Route path="/amc-sites" element={<AmcSitesPage />} />
         <Route path="/amc-sites/:id" element={<AmcSiteDetails />} />
         <Route path="/completed-sites" element={<CompletedSites />} />
         <Route path="/amc-sites/pending" element={<PendingSitesPage />} />
         <Route path="/create-amc-page" element={<CreateNewAmcPage />} />
 
-        {/* Calendar */}
+        {/* -------------------- Calendar Route -------------------- */}
         <Route path="/calendar" element={<CalendarPage />} />
 
-        {/* Service Completion */}
-        <Route
-          path="/service-completed/:id"
-          element={<ServiceCompletionPage />}
-        />
+        {/* -------------------- Service Completion -------------------- */}
+        <Route path="/service-completed/:id" element={<ServiceCompletionPage />} />
 
-        {/* Warranty */}
+        {/* -------------------- Warranty Routes -------------------- */}
         <Route path="/warranty-sites" element={<WarrantySitesPage />} />
-        <Route
-          path="/create-warranty-site"
-          element={<CreateNewWarrantyPage />}
-        />
-        <Route
-          path="/completed-warranty"
-          element={<CompletedWarrantySitesPage />}
-        />
-        <Route
-          path="/warranty-sites/:id"
-          element={<WarrantyDetailsPage />}
-        />
+        <Route path="/create-warranty-site" element={<CreateNewWarrantyPage />} />
+        <Route path="/completed-warranty" element={<CompletedWarrantySitesPage />} />
+        <Route path="/warranty-sites/:id" element={<WarrantyDetailsPage />} />
 
-        {/* Add Global Group */}
+        {/* -------------------- Add Group Route -------------------- */}
         <Route path="/add-group" element={<AddGroup />} />
+
       </Routes>
     </>
   );
 }
+
 
 // ======================================================
 // App Component

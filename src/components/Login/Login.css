@@ -1,60 +1,100 @@
+/* src/components/Login/Login.css */
+
+/* Body & container styling */
 .login-container {
-  height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
-  background: #f5f7f9;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(to right, #026336, #5a9c79);
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* Login box */
 .login-box {
-  width: 350px;
-  padding: 30px;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  background-color: #ffffff;
+  padding: 40px 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 400px;
   text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.login-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+}
+
+/* Title */
 .login-title {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #222;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 30px;
+  color: #333333;
 }
 
-label {
-  font-size: 14px;
-  font-weight: 500;
-  display: block;
+/* Form styling */
+.login-form {
+  display: flex;
+  flex-direction: column;
   text-align: left;
-  margin-bottom: 8px;
+}
+
+.login-form label {
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #555555;
 }
 
 .login-input {
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  outline: none;
-  margin-bottom: 15px;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  border: 1.5px solid #cccccc;
+  border-radius: 10px;
   font-size: 16px;
+  transition: all 0.3s ease;
 }
 
 .login-input:focus {
-  border-color: #007bff;
+  border-color: #035427;
+  box-shadow: 0 0 8px rgba(79, 172, 254, 0.5);
+  outline: none;
 }
 
+/* Login button */
 .login-btn {
-  width: 100%;
-  padding: 12px;
-  background: #007bff;
-  color: white;
+  background: #014623;
+  background: linear-gradient(to right, #52fe4f, #028523);
+  color: #dbe4db;
+  padding: 12px 0;
+  font-size: 18px;
+  font-weight: 600;
   border: none;
-  border-radius: 8px;
-  font-size: 16px;
+  border-radius: 10px;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .login-btn:hover {
-  background: #005ecc;
+  background: linear-gradient(to right, #024612, #4ffe6f);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .login-box {
+    padding: 30px 20px;
+  }
+
+  .login-title {
+    font-size: 24px;
+  }
+
+  .login-btn {
+    font-size: 16px;
+  }
 }

@@ -28,27 +28,35 @@ function Navbar() {
         Ibea Elevators
       </div>
 
-      {/* Desktop menu */}
-      <nav className="navbar-links">
-        <Link to="/">Home</Link>
-        <Link to="/amc-sites">AMC</Link>
-        <Link to="/warranty-sites">Warranty</Link>
-        <Link to="/completed-sites">Completed</Link>
-        <Link to="/calendar">Calendar</Link>
-      </nav>
-
-      <div className="nav-right">
-
-        {/* Before login show login button */}
-        {!technicianName && (
-          <button className="login-btn" onClick={() => navigate("/login")}>
+      {/* ----------------------------
+          BEFORE LOGIN — ONLY LOGIN BUTTON
+         ---------------------------- */}
+      {!technicianName && (
+        <div className="nav-right nav-end">
+          <button
+            className="login-btn"
+            onClick={() => navigate("/login")}
+          >
             Login
           </button>
-        )}
+        </div>
+      )}
 
-        {/* After login show name + add group + logout */}
-        {technicianName && (
-          <>
+      {/* ----------------------------
+          AFTER LOGIN — SHOW FULL MENU
+         ---------------------------- */}
+      {technicianName && (
+        <>
+          {/* Desktop menu */}
+          <nav className="navbar-links">
+            <Link to="/">Home</Link>
+            <Link to="/amc-sites">AMC</Link>
+            <Link to="/warranty-sites">Warranty</Link>
+            <Link to="/completed-sites">Completed</Link>
+            <Link to="/calendar">Calendar</Link>
+          </nav>
+
+          <div className="nav-right">
             <span
               className="tech-name"
               onClick={() => navigate("/login")}
@@ -56,48 +64,47 @@ function Navbar() {
               👨‍🔧 {technicianName}
             </span>
 
-            <button
+            {/* <button
               className="add-group-btn"
               onClick={() => navigate("/add-group")}
             >
               Add Group
-            </button>
+            </button> */}
 
             <button className="logout-btn" onClick={handleLogout}>
               Logout
             </button>
-          </>
-        )}
-      </div>
+          </div>
 
-      {/* Mobile Icon */}
-      <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
-        ☰
-      </div>
-
-      {/* Mobile dropdown menu */}
-      <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
-        <Link onClick={() => setMenuOpen(false)} to="/">Home</Link>
-        <Link onClick={() => setMenuOpen(false)} to="/amc-sites">AMC</Link>
-        <Link onClick={() => setMenuOpen(false)} to="/warranty-sites">Warranty</Link>
-        <Link onClick={() => setMenuOpen(false)} to="/completed-sites">Completed</Link>
-        <Link onClick={() => setMenuOpen(false)} to="/calendar">Calendar</Link>
-
-        {!technicianName && (
-          <button
-            className="mobile-login-btn"
-            onClick={() => {
-              setMenuOpen(false);
-              navigate("/login");
-            }}
+          {/* Mobile Icon */}
+          <div
+            className="hamburger"
+            onClick={() => setMenuOpen(!menuOpen)}
           >
-            Login
-          </button>
-        )}
+            ☰
+          </div>
 
-        {technicianName && (
-          <>
-            <span className="mobile-tech">👨‍🔧 {technicianName}</span>
+          {/* Mobile dropdown menu */}
+          <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
+            <Link onClick={() => setMenuOpen(false)} to="/">
+              Home
+            </Link>
+            <Link onClick={() => setMenuOpen(false)} to="/amc-sites">
+              AMC
+            </Link>
+            <Link onClick={() => setMenuOpen(false)} to="/warranty-sites">
+              Warranty
+            </Link>
+            <Link onClick={() => setMenuOpen(false)} to="/completed-sites">
+              Completed
+            </Link>
+            <Link onClick={() => setMenuOpen(false)} to="/calendar">
+              Calendar
+            </Link>
+
+            <span className="mobile-tech">
+              👨‍🔧 {technicianName}
+            </span>
 
             <button
               className="mobile-add-group"
@@ -115,9 +122,9 @@ function Navbar() {
             >
               Logout
             </button>
-          </>
-        )}
-      </div>
+          </div>
+        </>
+      )}
 
       <ToastContainer />
     </header>
