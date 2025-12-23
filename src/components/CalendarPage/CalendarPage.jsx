@@ -132,9 +132,9 @@ const CalendarPage = () => {
                       : site?.warrantyInfo?.technician}
                   </p>
 
-                  {site.type === "Warranty" && (
+                  {/* {site.type === "Warranty" && (
                     <p><strong>Plan:</strong> {site.warrantyPlan}</p>
-                  )}
+                  )} */}
 
                 </div>
               ))}

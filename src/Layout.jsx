@@ -3,7 +3,7 @@ import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useAMC } from "../AMCContext/AMCContext";
 
-// Components
+/* ===================== COMPONENTS ===================== */
 import Navbar from "../Navbar/Navbar";
 import Header from "../Header/Header";
 import AMC from "../AMC/AMC";
@@ -16,43 +16,41 @@ import Login from "../Login/Login";
 
 function Layout() {
   const location = useLocation();
-  const hideNavbar = location.pathname === "/login";
-
   const { technicianName } = useAMC();
+
+  /* Hide Navbar only on Login page */
+  const hideNavbar = location.pathname === "/login";
 
   return (
     <>
-      {/* Hide Navbar only on Login Page */}
+      {/* NAVBAR */}
       {!hideNavbar && <Navbar />}
 
       <Routes>
-
-        {/* LOGIN PAGE */}
+        {/* ================= LOGIN ================= */}
         <Route path="/login" element={<Login />} />
 
-        {/* HOME PAGE */}
+        {/* ================= HOME ================= */}
         <Route
           path="/"
           element={
             <div className="app-root">
-
               <Header />
               <AMC />
               <AMC_Plans />
               <WhyChooseanAMC />
 
-              {/* Visit Plan visible only after login */}
+              {/* Visible only after login */}
               {technicianName && <VisitPlaning />}
 
               <Contact />
               <Footer />
-
             </div>
           }
         />
 
-        {/* OTHER ROUTES CAN GO HERE */}
-
+        {/* ================= OTHER ROUTES ================= */}
+        {/* Add protected routes here later */}
       </Routes>
     </>
   );

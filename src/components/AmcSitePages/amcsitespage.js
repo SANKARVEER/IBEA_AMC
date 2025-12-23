@@ -13,7 +13,7 @@ const AmcSitesPage = () => {
     // Mark as completed and store relevant info
     markCompleted(site.id, {
       technician: technicianName,
-      whatsappGroup: site.serviceInfo?.whatsappGroup || { name: "Default Group", members: [] },
+      // whatsappGroup: site.serviceInfo?.whatsappGroup || { name: "Default Group", members: [] },
       date: new Date().toLocaleDateString(),
       time: new Date().toLocaleTimeString(),
     });
@@ -55,11 +55,11 @@ const AmcSitesPage = () => {
               {site.completed && (
                 <>
                   <p><strong>Technician:</strong> {site.serviceInfo?.technician || technicianName}</p>
-                  <p><strong>WhatsApp Group:</strong> {site.serviceInfo?.whatsappGroup?.name || "-"}</p>
+                  {/* <p><strong>WhatsApp Group:</strong> {site.serviceInfo?.whatsappGroup?.name || "-"}</p>
                   <p>
                     <strong>Group Members:</strong>{" "}
                     {site.serviceInfo?.whatsappGroup?.members?.join(", ") || "-"}
-                  </p>
+                  </p> */}
                   <p><strong>Date:</strong> {site.serviceInfo?.date || "-"}</p>
                   <p><strong>Time:</strong> {site.serviceInfo?.time || "-"}</p>
                   <span className="completed-badge">✅ Completed</span>

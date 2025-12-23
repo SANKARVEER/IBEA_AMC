@@ -14,10 +14,10 @@ function Navbar() {
   const handleLogout = () => {
     logout();
     toast.success("✔ Logged out successfully!", {
-      autoClose: 1500,
+      autoClose: 1000,
     });
 
-    setTimeout(() => navigate("/login"), 1500);
+    setTimeout(() => navigate("/"), 1000);
   };
 
   return (
@@ -106,7 +106,7 @@ function Navbar() {
               👨‍🔧 {technicianName}
             </span>
 
-            <button
+            {/* <button
               className="mobile-add-group"
               onClick={() => {
                 setMenuOpen(false);
@@ -114,7 +114,7 @@ function Navbar() {
               }}
             >
               Add Group
-            </button>
+            </button> */}
 
             <button
               className="mobile-logout"

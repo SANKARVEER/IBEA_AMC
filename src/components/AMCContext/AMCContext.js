@@ -1,15 +1,21 @@
 // AMCContext.jsx
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+} from "react";
 
 const AMCContext = createContext();
 
 export const AMCProvider = ({ children }) => {
-
-  /* ---------------------------------------------------------
-        TECHNICIAN STATE + LOCAL STORAGE LOGIN MEMORY
-  ----------------------------------------------------------*/
-  const [technicianName, setTechnicianName] = useState("");
-
+  /* =========================================================
+        TECHNICIAN LOGIN STATE (WITH LOCAL STORAGE)
+  ========================================================= */
+  const [technicianName, setTechnicianName] = useState(
+    localStorage.getItem("technicianName") || ""
+  );
+    /* Restore login on refresh */
   useEffect(() => {
     const saved = localStorage.getItem("technicianName");
     if (saved) setTechnicianName(saved);
@@ -23,12 +29,12 @@ export const AMCProvider = ({ children }) => {
   const logout = () => {
     setTechnicianName("");
     localStorage.removeItem("technicianName");
+    // NOTE: sites are NOT cleared to avoid data loss
   };
 
-
-  /* ---------------------------------------------------------
-        SITES STATE (LOAD FROM STORAGE)
-  ----------------------------------------------------------*/
+  /* =========================================================
+        SITES STATE (PERSISTED)
+  ========================================================= */
   const [sites, setSites] = useState(() => {
     const saved = localStorage.getItem("sitesData");
     return saved ? JSON.parse(saved) : [];
@@ -38,27 +44,32 @@ export const AMCProvider = ({ children }) => {
     localStorage.setItem("sitesData", JSON.stringify(sites));
   }, [sites]);
 
-
-  /* ---------------------------------------------------------
-        GET TODAY DATE (YYYY-MM-DD)
-  ----------------------------------------------------------*/
+  /* =========================================================
+        UTILS
+  ========================================================= */
   const getToday = () => {
     const d = new Date();
-    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(
-      d.getDate()
-    ).padStart(2, "0")}`;
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}-${String(d.getDate()).padStart(2, "0")}`;
   };
 
+  const getTime = () => new Date().toLocaleTimeString();
 
-  /* ---------------------------------------------------------
+  const getWhatsappGroup = () => {
+    const savedGroup =
+      JSON.parse(localStorage.getItem("globalGroup")) || [];
+    return savedGroup.length > 0 ? savedGroup[0] : null;
+  };
+
+  /* =========================================================
         MARK AMC COMPLETED
-  ----------------------------------------------------------*/
+  ========================================================= */
   const markCompleted = (id) => {
     const date = getToday();
-    const time = new Date().toLocaleTimeString();
-
-    const savedGroup = JSON.parse(localStorage.getItem("globalGroup")) || [];
-    const whatsappGroup = savedGroup.length > 0 ? savedGroup[0] : null;
+    const time = getTime();
+    const whatsappGroup = getWhatsappGroup();
 
     setSites((prev) =>
       prev.map((site) =>
@@ -67,7 +78,6 @@ export const AMCProvider = ({ children }) => {
               ...site,
               completed: true,
               completedDate: date,
-
               serviceInfo: {
                 date,
                 time,
@@ -81,16 +91,13 @@ export const AMCProvider = ({ children }) => {
     );
   };
 
-
-  /* ---------------------------------------------------------
+  /* =========================================================
         MARK WARRANTY COMPLETED
-  ----------------------------------------------------------*/
+  ========================================================= */
   const markWarrantyCompleted = (id) => {
     const date = getToday();
-    const time = new Date().toLocaleTimeString();
-
-    const savedGroup = JSON.parse(localStorage.getItem("globalGroup")) || [];
-    const whatsappGroup = savedGroup.length > 0 ? savedGroup[0] : null;
+    const time = getTime();
+    const whatsappGroup = getWhatsappGroup();
 
     setSites((prev) =>
       prev.map((site) =>
@@ -99,7 +106,6 @@ export const AMCProvider = ({ children }) => {
               ...site,
               warrantyCompleted: true,
               warrantyCompletedDate: date,
-
               warrantyInfo: {
                 date,
                 time,
@@ -113,17 +119,22 @@ export const AMCProvider = ({ children }) => {
     );
   };
 
-
+  /* =========================================================
+        CONTEXT EXPORT
+  ========================================================= */
   return (
     <AMCContext.Provider
       value={{
-        sites,
-        setSites,
-
+        /* Auth */
         technicianName,
         login,
         logout,
 
+        /* Data */
+        sites,
+        setSites,
+
+        /* Actions */
         markCompleted,
         markWarrantyCompleted,
       }}

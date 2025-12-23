@@ -56,11 +56,11 @@ const WarrantySitesPage = () => {
               {site.warrantyCompleted && (
                 <>
                   <p><strong>Technician:</strong> {site.warrantyInfo?.technician || technicianName}</p>
-                  <p><strong>WhatsApp Group:</strong> {site.warrantyInfo?.whatsappGroup?.name || "-"}</p>
+                  {/* <p><strong>WhatsApp Group:</strong> {site.warrantyInfo?.whatsappGroup?.name || "-"}</p>
                   <p>
                     <strong>Group Members:</strong>{" "}
                     {site.warrantyInfo?.whatsappGroup?.members?.join(", ") || "-"}
-                  </p>
+                  </p> */}
                   <p><strong>Date:</strong> {site.warrantyInfo?.date || "-"}</p>
                   <p><strong>Time:</strong> {site.warrantyInfo?.time || "-"}</p>
                   <span className="completed-badge">✅ Completed</span>

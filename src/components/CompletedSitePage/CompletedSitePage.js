@@ -97,9 +97,9 @@ const CompletedSitesPage = () => {
               <p>
                 <strong>Location:</strong> {site.location}
               </p>
-              <p>
+              {/* <p>
                 <strong>Warranty Plan:</strong> {site.warrantyPlan}
-              </p>
+              </p> */}
               <p>
                 <strong>Date:</strong>{" "}
                 {site.warrantyInfo?.date || "-"}

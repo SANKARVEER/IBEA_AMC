@@ -25,12 +25,12 @@ const CalendarPage = () => {
           All
         </button>
         
-        <button
+        {/* <button
           className={filter === "XL" ? "active" : ""}
           onClick={() => setFilter("XL")}
         >
           XL
-        </button>
+        </button> */}
       </div>
 
       {/* NO DATA */}
@@ -46,7 +46,7 @@ const CalendarPage = () => {
             <p><strong>Date:</strong> {entry.date}</p>
             <p><strong>Time:</strong> {entry.time}</p>
             <p><strong>Technician:</strong> {entry.technician}</p>
-            <p><strong>Seat Type:</strong> {entry.seatType}</p>
+            {/* <p><strong>Seat Type:</strong> {entry.seatType}</p> */}
           </div>
         ))}
       </div>

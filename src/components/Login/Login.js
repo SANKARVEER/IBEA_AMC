@@ -43,12 +43,12 @@ const Login = () => {
     login(trimmedName);
 
     // Show success toast
-    toast.success(`Welcome, ${trimmedName}!`, { autoClose: 1500 });
+    toast.success(`Welcome, ${trimmedName}!`, { autoClose: 500 });
 
     // Redirect to home after 1.5s
     setTimeout(() => {
       navigate("/");
-    }, 1500);
+    }, 500);
   };
 
   return (
@@ -103,7 +103,7 @@ const Login = () => {
       </div>
 
       {/* Toast notifications */}
-      <ToastContainer position="top-right" autoClose={1500} hideProgressBar={false} />
+      {/* <ToastContainer position="top-right" autoClose={1500} hideProgressBar={false} /> */}
     </div>
   );
 };
